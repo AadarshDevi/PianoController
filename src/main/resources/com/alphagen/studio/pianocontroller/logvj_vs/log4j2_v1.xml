@@ -16,7 +16,6 @@
         <RollingFile name="FileAppender"
                      fileName="${LOG_DIR}/pianoController.log"
                      filePattern="${LOG_DIR}/pianoController-%d{yyyy-MM-dd}-%i.log.gz"
-                     append="false"
         >
             <PatternLayout pattern="${LOG_PATTERN}"/>
             <Policies>

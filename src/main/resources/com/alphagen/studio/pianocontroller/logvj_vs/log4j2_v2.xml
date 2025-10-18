@@ -14,13 +14,14 @@
 
         <!-- RollingFile appender writes logs to files and rolls them -->
         <RollingFile name="FileAppender"
-                     fileName="${LOG_DIR}/pianoController.log"
-                     filePattern="${LOG_DIR}/pianoController-%d{yyyy-MM-dd}-%i.log.gz"
+                     fileName="${LOG_DIR}/pianoController-%d{yyyy-MM-dd-HH-mm-ss}.log"
+                     filePattern="${LOG_DIR}/pianoController-%d{yyyy-MM-dd-HH-mm-ss}-%i.log.gz"
                      append="false"
         >
             <PatternLayout pattern="${LOG_PATTERN}"/>
             <Policies>
-                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <TimeBasedTriggeringPolicy interval="10" modulate="true"/>
+                <OnStartupTriggeringPolicy/>
                 <SizeBasedTriggeringPolicy size="10 MB"/>
             </Policies>
             <DefaultRolloverStrategy max="7"/>

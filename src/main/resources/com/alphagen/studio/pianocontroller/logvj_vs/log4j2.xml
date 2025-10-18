@@ -3,7 +3,7 @@
 
     <Properties>
         <Property name="LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Property>
-        <Property name="LOG_DIR">C:/Users/d_aad/AppData/Local/alphagnfss/PianoController/0.1.0/log</Property>
+        <Property name="LOG_DIR">${user.home}/AppData/Local/alphagnfss/PianoController/0.1.0/log</Property>
     </Properties>
 
     <Appenders>
