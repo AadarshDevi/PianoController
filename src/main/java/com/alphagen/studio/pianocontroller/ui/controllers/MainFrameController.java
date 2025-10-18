@@ -26,6 +26,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.sound.midi.MidiDevice;
+import javax.sound.midi.MidiUnavailableException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
@@ -243,7 +244,14 @@ public class MainFrameController {
         isRunning();
 
         MidiDeviceReceiver mdr = new MidiDeviceReceiver(midiDevice.getDeviceInfo().getName());
-        Thread thread = new Thread(mdr);
+        Thread receiverThread = new Thread(mdr);
+        receiverThread.start();
+
+        try {
+            midiDevice.open();
+        } catch (MidiUnavailableException e) {
+            logger.error("Unable to Open Midi Device");
+        }
     }
 
     public void setMidiDevice(MidiDevice midiDevice) {
