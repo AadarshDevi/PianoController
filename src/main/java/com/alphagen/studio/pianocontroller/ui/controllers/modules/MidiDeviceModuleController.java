@@ -1,5 +1,6 @@
 package com.alphagen.studio.pianocontroller.ui.controllers.modules;
 
+import com.alphagen.studio.pianocontroller.midi.MidiDeviceChecker;
 import com.alphagen.studio.pianocontroller.ui.managers.ControllerManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -11,7 +12,6 @@ import org.apache.logging.log4j.Logger;
 import javax.sound.midi.MidiDevice;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
-import javax.sound.midi.Transmitter;
 
 public class MidiDeviceModuleController {
     private static final Logger logger = LogManager.getLogger(MidiDeviceModuleController.class);
@@ -25,33 +25,10 @@ public class MidiDeviceModuleController {
 
     @FXML
     public void connectMidiDevice() throws MidiUnavailableException {
-        if (midiDevice == null) {
-            logger.error("MidiDevice is Null");
-            return;
-        }
-        midiDevice.open();
-        logger.info("MidiDevice Opened: {}", midiDevice.getDeviceInfo().getName());
-        if (midiDevice.isOpen()) {
-
-            try {
-
-                Transmitter transmitter = midiDevice.getTransmitter();
-
-                connected_icon.setVisible(true);
-                midiDeviceConnector.setText("Connectable");
-                ControllerManager.getMidiDeviceSelectionController().setMidiDevice(midiDevice);
-
-            } catch (MidiUnavailableException e) {
-                logger.error("Unable to get Transmitter");
-                logger.error(e);
-            }
-
-            midiDevice.close();
-            logger.info("MidiDevice Closed: {}", midiDevice.getDeviceInfo().getName());
-        } else {
-            connected_icon.setVisible(false);
-        }
-        ControllerManager.getMidiDeviceSelectionController().unique();
+        boolean connectable = MidiDeviceChecker.checkDevice(midiDevice);
+        if (connectable) midiDeviceConnector.setText("Connectable");
+        else midiDeviceConnector.setText("Connect");
+        connected_icon.setVisible(connectable);
     }
 
     public MidiDevice getMidiDevice() {
