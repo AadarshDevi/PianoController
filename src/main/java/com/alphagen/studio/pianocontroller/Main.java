@@ -22,6 +22,7 @@ public class Main extends Application {
     public static void quit() {
         logger.info("Closing Piano Controller...");
         LogManager.shutdown();
+        System.out.println("Quit Piano Controller.");
         Platform.exit();
     }
 

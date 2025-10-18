@@ -87,12 +87,16 @@ public class MidiDeviceSelectionController {
     public void useSelectedMidiDevice() {
         if (midiDevice != null) {
             ControllerManager.getMainFrameController().setMidiDevice(midiDevice);
-            Stage stage = (Stage) rootPane.getScene().getWindow();
             testingConnection = false;
-            ControllerManager.getMainFrameController().setSelectMidiUIOpen(false);
-            logger.info("Closing Midi Selection Window");
-            stage.close();
+            close();
         }
+    }
+
+    public void close() {
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        ControllerManager.getMainFrameController().setSelectMidiUIOpen(false);
+        logger.info("Closing Midi Selection Window");
+        stage.close();
     }
 
     public void populateList(MidiDevice midiDevice) {
