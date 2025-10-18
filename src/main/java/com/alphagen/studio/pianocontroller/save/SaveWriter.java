@@ -26,8 +26,6 @@ public class SaveWriter {
     public void newSave() {
 
         try (PrintWriter printWriter = new PrintWriter(jfsFile)) {
-            printWriter.println("#_NFS-AXX%55");
-            printWriter.println();
 
             // Letters: LETTER_A - LETTER_Z
             char letter = 'A';
