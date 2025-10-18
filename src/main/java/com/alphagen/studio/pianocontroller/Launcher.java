@@ -77,7 +77,7 @@ public class Launcher {
         Application.launch(Main.class, args);
     }
 
-//    public static JFileSystem getjFileSystem() {
-//        return jFileSystem;
-//    }
+    public static JFileSystem getjFileSystem() {
+        return jFileSystem;
+    }
 }

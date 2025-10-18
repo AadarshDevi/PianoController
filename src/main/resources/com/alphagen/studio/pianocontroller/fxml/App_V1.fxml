@@ -42,7 +42,7 @@
       </Label>
       <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" prefHeight="40.0" prefWidth="200.0">
          <children>
-            <Button fx:id="midi_device_select" mnemonicParsing="false" onAction="#selectMidiDevice" text="Select Midi Device">
+            <Button fx:id="selectMidiDeviceButton" mnemonicParsing="false" onAction="#selectMidiDevice" text="Select Midi Device">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>

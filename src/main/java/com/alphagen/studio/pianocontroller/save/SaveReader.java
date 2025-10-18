@@ -1,6 +1,7 @@
 package com.alphagen.studio.pianocontroller.save;
 
-import com.alphagen.studio.pianocontroller.save.exception.KeyMapEmptyException;
+import com.alphagen.studio.pianocontroller.Launcher;
+import jfilesystem.JFileSystem;
 import jfilesystem.file.JFSFile;
 import jfilesystem.file.exception.JSFFileNullException;
 import org.apache.logging.log4j.LogManager;
@@ -9,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Properties;
@@ -18,24 +20,25 @@ public class SaveReader {
     private static final Logger logger = LogManager.getLogger(SaveReader.class);
     private final JFSFile jfsFile;
 
+    // TODO: store all properties in a file for editing/save backup/save as
     // HasMap<PianoKey, KeyboardKey>
-    private final HashMap<String, Integer> rawMap;
+//    private final HashMap<String, Integer> rawMap;
     private final HashMap<Integer, Integer> keyMap;
     private final Properties properties;
 
     private final HashMap<Integer, Integer> mouseMap;
 
     public SaveReader(JFSFile jfsFile) throws IOException, JSFFileNullException {
-        if (jfsFile == null) throw new JSFFileNullException();
+        if (jfsFile == null || jfsFile.length() == 0) throw new JSFFileNullException();
         this.jfsFile = jfsFile;
 
-        rawMap = new HashMap<>();
+//        rawMap = new HashMap<>();
         keyMap = new HashMap<>();
         mouseMap = new HashMap<>();
         properties = new Properties();
 
-        FileInputStream fileInputStream = new FileInputStream(jfsFile);
-        properties.load(fileInputStream);
+        FileInputStream fileInputStream = new FileInputStream(jfsFile); // create a file input stream to read key and value pairs
+        properties.load(fileInputStream); // create the key and propertie pairs
         logger.info("SaveReader is ready");
     }
 
@@ -136,13 +139,7 @@ public class SaveReader {
 
     public void readSpecials() {
 
-        String[] specials = new String[]{
-                "SPACE",
-                "CONTROL",
-                "SHIFT",
-                "TAB",
-                "ALT"
-        };
+        String[] specials = new String[]{"SPACE", "CONTROL", "SHIFT", "TAB", "ALT"};
 
         for (String keyVal : specials) {
 
@@ -166,11 +163,7 @@ public class SaveReader {
     }
 
     public void readMouseClicks() {
-        String[] clicks = new String[]{
-                "LEFT",
-                "MIDDLE",
-                "RIGHT"
-        };
+        String[] clicks = new String[]{"LEFT", "MIDDLE", "RIGHT"};
 
         for (int i = 0; i < clicks.length; i++) {
 
@@ -195,10 +188,7 @@ public class SaveReader {
     }
 
     public void readMouseScrolls() {
-        String[] scrolls = new String[]{
-                "MIDDLE_UP",
-                "MIDDLE_DOWN"
-        };
+        String[] scrolls = new String[]{"MIDDLE_UP", "MIDDLE_DOWN"};
 
         for (String key : scrolls) {
             String value = getValue("MOUSE_SCROLL_" + key);
@@ -209,13 +199,7 @@ public class SaveReader {
     }
 
     public void readMouseMovement() {
-        String[] movements = new String[]{
-                "LEFT",
-                "RIGHT",
-                "UP",
-                "DOWN",
-                "SENSITIVITY"
-        };
+        String[] movements = new String[]{"LEFT", "RIGHT", "UP", "DOWN", "SENSITIVITY"};
 
         for (String key : movements) {
             String value = getValue("MOUSE_MOVEMENT_" + key);
@@ -225,9 +209,24 @@ public class SaveReader {
 
     }
 
-    public HashMap<String, Integer> getKeyMap() throws KeyMapEmptyException {
-        logger.info("KeyMap size: " + rawMap.size());
-        if (rawMap.size() == 0) throw new KeyMapEmptyException();
-        return rawMap;
+//    public HashMap<String, Integer> getKeyMap() throws KeyMapEmptyException {
+//        logger.info("KeyMap size: " + rawMap.size());
+//        if (rawMap.size() == 0) throw new KeyMapEmptyException();
+//        return rawMap;
+//    }
+
+    /**
+     * This method takes in the properties that are not null (hopefully) and puts it in a
+     * file in root project folder. whenever, the file is edited, save backup/as, the properties
+     * will be written in this file.
+     */
+    public void currentSave() {
+        try {
+            JFileSystem jFileSystem = Launcher.getjFileSystem();
+            FileOutputStream fileOutputStream = new FileOutputStream(jFileSystem.getBasePath() + "/currentFile.piano.txt");
+            properties.store(fileOutputStream, null);
+        } catch (IOException e) {
+            logger.error("Unable to get JFSFile's Location");
+        }
     }
 }

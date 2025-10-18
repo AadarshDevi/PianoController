@@ -9,6 +9,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -41,7 +44,7 @@ public class MainFrameController {
     @FXML
     private Label midiDeviceNameLabel;
     @FXML
-    private Button midi_device_select;
+    private Button selectMidiDeviceButton;
 
     @FXML
     private Label ui_type_name;
@@ -57,8 +60,8 @@ public class MainFrameController {
         selectMidiUIOpen = false;
 
         // test
-        // configFile = new JFSFile("D:/piano_config_1.piano.txt");
-        // logger.info("Set Config file: " + configFile.getAbsolutePath());
+        configFile = new JFSFile("D:/piano_config_1.piano.txt");
+        logger.info("Set Config file: " + configFile.getAbsolutePath());
         // test
     }
 
@@ -72,7 +75,7 @@ public class MainFrameController {
             fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Piano Config", "*.piano.txt"));
             config = fileChooser.showOpenDialog(null);
         }
-//        config = configFile; // test
+        config = configFile; // test
         if (config != null) {
             this.configFile = config;
             logger.info("Loaded Config File: {}", config.getName());
@@ -84,7 +87,8 @@ public class MainFrameController {
                 saveReader.readNumPad();
                 saveReader.readSpecials();
                 saveReader.readMouseClicks();
-                System.exit(0);
+                saveReader.currentSave();
+                System.exit(0);// test
             } catch (IOException e) {
                 throw new RuntimeException(e);
             } catch (JSFFileNullException e) {
@@ -137,10 +141,9 @@ public class MainFrameController {
             selectMidiUIOpen = true;
             logger.info("Midi Device Selection Window Open");
 
-
-            FXMLLoader fxmlLoader2 = new FXMLLoader(Main.class.getResource("fxml/SelectMidiDevice_V1.fxml"));
-            VBox midiSelection = fxmlLoader2.load();
-            MidiDeviceSelectionController midiDeviceSelectionController = fxmlLoader2.getController();
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("fxml/SelectMidiDevice_V1.fxml"));
+            VBox midiSelection = fxmlLoader.load();
+            MidiDeviceSelectionController midiDeviceSelectionController = fxmlLoader.getController();
             ControllerManager.setMidiDeviceSelectionController(midiDeviceSelectionController);
 
             if (midiDevice == null) {
@@ -150,16 +153,29 @@ public class MainFrameController {
             }
 
             Stage stage = new Stage();
+
+            Scene scene = new Scene(midiSelection);
+            scene.setOnKeyPressed(keyEvent -> {
+                if (new KeyCodeCombination(KeyCode.W, KeyCombination.CONTROL_DOWN).match(keyEvent)) {
+                    quit(stage);
+                }
+            });
+
             stage.setTitle("Connect to MidiDevice...");
             stage.setResizable(false);
 //            stage.setMaxHeight(400);
-            stage.setScene(new Scene(midiSelection));
+            stage.setScene(scene);
             stage.show();
             stage.setOnCloseRequest(e -> {
-                logger.info("Midi Device Selection Window Closed");
-                selectMidiUIOpen = false;
+                quit(stage);
             });
         }
+    }
+
+    public void quit(Stage stage) {
+        logger.info("Midi Device Selection Window Closed");
+        selectMidiUIOpen = false;
+        stage.close();
     }
 
     public void setSelectMidiUIOpen(boolean selectMidiUIOpen) {

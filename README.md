@@ -80,3 +80,45 @@ The app with **_"-console"_** has the Terminal/CommandPrompt open when running t
 ## Inputs
 
 Piano Controller can mimic keyboard and mouse keys, mouse ~~scrolling and~~ movement.
+
+## Future Updates (Alpha/Beta/Release)
+
+_**Note:** Some of the updates might not happen. Some updates might happen in alpha or beta. And other might happen in
+the release version._
+
+1. UI Overhaul: making the ui of the app easier. Useful to make custom themes.
+2. UI for creating/editing save files.
+3. Remove Midi Devices without valid transmitters.
+4. Add variety of PianoUI (UI Type in app)
+    1. LetterKey: Square Key, a letter in a square
+    2. PianoKey: Piano Key, a key that changes size depending on the key color (Black/White)
+    3. GrandPiano: Piano 88 Key, A full sized PianoUI with 88 keys
+5. Key History: holds the previous pressed keys in some sort of listview.
+6. Create a way to save files.
+7. Understand and Improve file logging with log4j (xml config file)
+8. Add menubar:
+    1. theme testing / set theme.
+    2. Quit app
+    3. create config
+    4. open config
+    5. edit config
+    6. save config
+    7. connect to midi device
+    8. select ui type
+    9. font sizes (can be multiplier "float fontMultiplier" )
+        1. Tiny ()
+        2. Small ()
+        3. Normal (x1)
+        4. Medium ()
+        5. Large ()
+        6. Extra Large ()
+   > Changes the size of the ui to accommodate the new font size. It
+   > can only increase in size. maybe in future it can reduce in size.
+9. Rename many variables using appropriate casing and names.
+10. Create a UIConstant/ThemeUI to hold all ui related constant values.
+11. Create a music sheet that holds all the key presses and can be put into an app if possible to get key and its
+    sound (converting it into music sheets).
+
+
+
+
