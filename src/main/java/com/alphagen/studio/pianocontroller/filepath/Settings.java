@@ -1,6 +1,5 @@
 package com.alphagen.studio.pianocontroller.filepath;
 
-import jfilesystem.JFileSystem;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,9 +11,6 @@ public class Settings {
     private final FilePath filepath;
 
     public Settings() {
-
-
-
         logger.info("Getting FilePath");
         filepath = FilePathFactory.getFilePath();
         logger.info("Retrieved FilePath");
