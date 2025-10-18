@@ -277,10 +277,6 @@ public class MainFrameController {
         }
     }
 
-    public File getConfigFile() {
-        return configFile;
-    }
-
     public void isRunning() {
         if (isRunning) {
             isRunning = false;
