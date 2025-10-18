@@ -103,6 +103,14 @@
                   <Insets bottom="-1.0" />
                </padding>
             </Button>
+            <Button fx:id="stopAppButton" alignment="CENTER" maxHeight="-Infinity" maxWidth="60.0" minHeight="-Infinity" minWidth="30.0" mnemonicParsing="false" onAction="#stopApplication" prefHeight="30.0" prefWidth="30.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <padding>
+                  <Insets bottom="-1.0" />
+               </padding>
+            </Button>
          </children>
          <VBox.margin>
             <Insets />

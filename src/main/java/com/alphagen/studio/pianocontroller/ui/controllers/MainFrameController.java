@@ -61,6 +61,8 @@ public class MainFrameController {
     @FXML
     private Button runAppButton;
     @FXML
+    private Button stopAppButton;
+    @FXML
     private HBox configButtonContainer;
 
     public static Thread getReceiverThread() {
@@ -71,13 +73,18 @@ public class MainFrameController {
     public void initialize() {
         logger.info("Initialized");
         selectMidiUIOpen = false;
-        runAppButton.setTextFill(Paint.valueOf("#ffffff"));
-        isRunning();
 
-        // test
-//        configFile = new JFSFile("D:/piano_config_1.piano.txt");
-//        logger.info("Set Config file: " + configFile.getAbsolutePath());
-        // test
+        runAppButton.setTextFill(Paint.valueOf("#ffffff"));
+        runAppButton.setText("▶");
+        runAppButton.setPrefWidth(30);
+        runAppButton.setBackground(new Background(new BackgroundFill(Paint.valueOf("#42bf34"), new CornerRadii(5), Insets.EMPTY)));
+
+        stopAppButton.setTextFill(Paint.valueOf("#ffffff"));
+        stopAppButton.setText("⏹");
+        stopAppButton.setPrefWidth(30);
+        stopAppButton.setBackground(new Background(new BackgroundFill(Paint.valueOf("#bf3434"), new CornerRadii(5), Insets.EMPTY)));
+
+        isRunning();
     }
 
     @FXML
@@ -91,7 +98,7 @@ public class MainFrameController {
             config = fileChooser.showOpenDialog(null);
             validConfigFile();
         }
-//        config = configFile; // test
+
         if (config != null) {
             validConfigFile();
             this.configFile = config;
@@ -105,7 +112,7 @@ public class MainFrameController {
                 saveReader.readSpecials();
                 saveReader.readMouseClicks();
                 saveReader.currentSave();
-//                System.exit(0);// test
+
             } catch (IOException e) {
                 throw new RuntimeException(e);
             } catch (JSFFileNullException e) {
@@ -276,16 +283,17 @@ public class MainFrameController {
 
     public void isRunning() {
         if (isRunning) {
-            runAppButton.setText("⏹");
-            runAppButton.setPrefWidth(30);
-            runAppButton.setBackground(new Background(new BackgroundFill(Paint.valueOf("#bf3434"), new CornerRadii(5), Insets.EMPTY)));
             isRunning = false;
+            runAppButton.setVisible(false);
+            runAppButton.setManaged(false);
+            stopAppButton.setVisible(true);
+            stopAppButton.setManaged(true);
         } else {
-            if (midiDevice != null) midiDevice.close();
-            runAppButton.setText("▶");
-            runAppButton.setPrefWidth(30);
-            runAppButton.setBackground(new Background(new BackgroundFill(Paint.valueOf("#42bf34"), new CornerRadii(5), Insets.EMPTY)));
             isRunning = true;
+            stopAppButton.setVisible(false);
+            stopAppButton.setManaged(false);
+            runAppButton.setVisible(true);
+            runAppButton.setManaged(true);
         }
     }
 
@@ -332,4 +340,11 @@ public class MainFrameController {
         this.midiDevice = midiDevice;
         midiDeviceNameLabel.setText(this.midiDevice.getDeviceInfo().getName());
     }
+
+    public void stopApplication() {
+        midiDevice.close();
+        isRunning = false;
+        isRunning();
+    }
+
 }
