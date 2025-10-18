@@ -20,6 +20,10 @@ public class Main extends Application {
     private static final Logger logger = LogManager.getLogger(Main.class);
 
     public static void quit() {
+        if (MainFrameController.getReceiverThread() != null) {
+            ControllerManager.getMainFrameController().getMidiDevice().close();
+            MainFrameController.getReceiverThread().interrupt();
+        }
         logger.info("Closing Piano Controller...");
         LogManager.shutdown();
         System.out.println("Quit Piano Controller.");
