@@ -6,13 +6,18 @@
 
 1. Name: Aadarsh Devi
 
-### Project
+### Project Basic
 
 1. Name: Piano Controller
 2. Group: 2
 3. Build: 1
 4. Release Version: 0.1.0
 5. Internal Version: 2.1.0.1.0
+
+### Project Technologies
+1. Programming Language: Java 23.0.1
+2. GUI Library: JavaFX 23.0.1
+3. Logging Library: Log4J 2.25.2
 
 ### Description
 
