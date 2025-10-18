@@ -229,4 +229,12 @@ public class SaveReader {
             logger.error("Unable to get JFSFile's Location");
         }
     }
+
+    public HashMap<Integer, Integer> getKeyMap() {
+        return keyMap;
+    }
+
+    public HashMap<Integer, Integer> getMouseMap() {
+        return mouseMap;
+    }
 }
