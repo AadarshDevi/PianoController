@@ -15,6 +15,7 @@
 5. Internal Version: 2.1.0.1.0
 
 ### Project Technologies
+
 1. Programming Language: Java 23.0.1
 2. GUI Library: JavaFX 23.0.1
 3. Logging Library: Log4J 2.25.2
@@ -76,3 +77,6 @@ There might be 2 version of the same app.
 
 The app with **_"-console"_** has the Terminal/CommandPrompt open when running the app. it will contain
 
+## Inputs
+
+Piano Controller can mimic keyboard and mouse keys, mouse ~~scrolling and~~ movement.
