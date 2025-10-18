@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.alphagen.studio.pianocontroller.ui.controllers.MainFrameController">
+   <children>
+      <Label fx:id="configFileNameLabel" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="40.0" text="Config File">
+         <font>
+            <Font name="Cascadia Mono Regular" size="16.0" />
+         </font>
+         <padding>
+            <Insets left="10.0" />
+         </padding>
+      </Label>
+      <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" prefHeight="40.0" prefWidth="600.0" spacing="5.0">
+         <children>
+            <Label maxHeight="1.7976931348623157E308" prefHeight="30.0" text="Config:">
+               <font>
+                  <Font name="Cascadia Mono Regular" size="14.0" />
+               </font>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Label>
+            <Button fx:id="config_file_open" mnemonicParsing="false" onAction="#openConfigFile" text="Open" />
+            <Button fx:id="config_file_create" mnemonicParsing="false" onAction="#createConfigFile" text="Create" />
+            <Button fx:id="config_file_save" mnemonicParsing="false" onAction="#saveConfigFile" text="Save" />
+         </children>
+      </HBox>
+      <Label fx:id="midiDeviceNameLabel" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="40.0" text="Midi Device">
+         <font>
+            <Font name="Cascadia Mono Regular" size="16.0" />
+         </font>
+         <padding>
+            <Insets left="10.0" />
+         </padding>
+      </Label>
+      <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" prefHeight="40.0" prefWidth="200.0">
+         <children>
+            <Button fx:id="midi_device_select" mnemonicParsing="false" onAction="#selectMidiDevice" text="Select Midi Device">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+      <Label fx:id="ui_type_name" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="40.0" text="UI Type">
+         <font>
+            <Font name="Cascadia Mono Regular" size="16.0" />
+         </font>
+         <padding>
+            <Insets left="10.0" />
+         </padding>
+      </Label>
+      <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" prefHeight="40.0" prefWidth="200.0" spacing="5.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="300.0" spacing="5.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Button fx:id="ui_type_select" mnemonicParsing="false" onAction="#selectUIType" text="Select UI Type">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" maxHeight="-Infinity" prefHeight="40.0" prefWidth="120.0" spacing="5.0">
+               <children>
+                  <Button fx:id="app_run" alignment="CENTER" mnemonicParsing="false" onAction="#runApplication" prefWidth="100.0" text="Run" />
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+   </children>
+</VBox>

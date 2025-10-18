@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="572.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.alphagen.studio.pianocontroller.ui.controllers.modules.MidiDeviceModuleController">
+   <left>
+      <StackPane prefHeight="40.0" prefWidth="40.0" BorderPane.alignment="CENTER">
+         <children>
+            <Circle fill="RED" radius="14.0" stroke="#a80000" strokeType="INSIDE" strokeWidth="2.0" StackPane.alignment="CENTER" />
+            <Circle fill="#ff7575" radius="8.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" StackPane.alignment="CENTER" />
+            <StackPane fx:id="connected_icon" prefHeight="40.0" prefWidth="40.0" visible="false">
+               <children>
+                  <Circle fill="#00bc2f" radius="14.0" stroke="#00721b" strokeType="INSIDE" strokeWidth="2.0" StackPane.alignment="CENTER" />
+                  <Circle fill="#00ff40" radius="8.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" StackPane.alignment="CENTER" />
+               </children>
+            </StackPane>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </StackPane>
+   </left>
+   <center>
+      <Label fx:id="midiDeviceNameLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Label" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets left="10.0" />
+         </padding>
+         <font>
+            <Font name="Cascadia Mono Regular" size="16.0" />
+         </font>
+      </Label>
+   </center>
+   <right>
+      <Button fx:id="midiDeviceConnector" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#connectMidiDevice" prefHeight="28.0" prefWidth="100.0" text="Connect" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets left="6.0" right="6.0" />
+         </BorderPane.margin>
+      </Button>
+   </right>
+</BorderPane>
