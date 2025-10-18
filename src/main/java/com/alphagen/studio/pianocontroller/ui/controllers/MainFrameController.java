@@ -36,6 +36,10 @@ import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.util.HashMap;
 
+/**
+ * This is the controller of the App. everything will go through this controller. So
+ * this controller is in a manager and accessible to all other classes to modify data.
+ */
 public class MainFrameController {
 
     /**
