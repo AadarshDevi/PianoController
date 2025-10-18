@@ -29,7 +29,8 @@
       </ListView>
       <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="40.0" prefWidth="200.0">
          <children>
-            <Button fx:id="useSelectedMidiDeviceButton" mnemonicParsing="false" onAction="#useSelectedMidiDevice" text="Use Device" HBox.hgrow="NEVER">
+            <Button fx:id="closeMidiSelectionButton" mnemonicParsing="false" onAction="#close" prefWidth="75.0" text="Close" />
+            <Button fx:id="useSelectedMidiDeviceButton" mnemonicParsing="false" onAction="#useSelectedMidiDevice" prefWidth="75.0" text="Use Device" HBox.hgrow="NEVER">
                <HBox.margin>
                   <Insets left="5.0" right="5.0" />
                </HBox.margin>

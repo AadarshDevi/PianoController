@@ -5,9 +5,10 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.alphagen.studio.pianocontroller.ui.controllers.MainFrameController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.alphagen.studio.pianocontroller.ui.controllers.MainFrameController">
    <children>
       <Label fx:id="configFileNameLabel" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="40.0" text="Config File">
          <font>
@@ -17,7 +18,7 @@
             <Insets left="10.0" />
          </padding>
       </Label>
-      <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" prefHeight="40.0" prefWidth="600.0" spacing="5.0">
+      <HBox fx:id="configButtonContainer" alignment="CENTER_LEFT" maxHeight="-Infinity" prefHeight="40.0" prefWidth="600.0" spacing="5.0">
          <children>
             <Label maxHeight="1.7976931348623157E308" prefHeight="30.0" text="Config:">
                <font>
@@ -68,12 +69,47 @@
                   </Button>
                </children>
             </HBox>
-            <HBox alignment="CENTER" maxHeight="-Infinity" prefHeight="40.0" prefWidth="120.0" spacing="5.0">
-               <children>
-                  <Button fx:id="app_run" alignment="CENTER" mnemonicParsing="false" onAction="#runApplication" prefWidth="100.0" text="Run" />
-               </children>
-            </HBox>
          </children>
+      </HBox>
+      <HBox alignment="CENTER_RIGHT" maxHeight="100.0" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="47.0" prefWidth="500.0" spacing="5.0">
+         <children>
+            <Button fx:id="resetDataButton" alignment="CENTER" layoutX="400.0" layoutY="19.0" maxHeight="-Infinity" maxWidth="60.0" minHeight="-Infinity" minWidth="30.0" mnemonicParsing="false" onAction="#resetData" prefHeight="30.0" prefWidth="30.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <graphic>
+                  <SVGPath content="M 22.719 12A 10.719 10.719 0 0 1 1.28 12h .838a 9.916 9.916 0 1 0 1.373-5H 8v 1H 2V 2h 1v 4.2A 10.71 10.71 0 0 1 22.719 12z" scaleX="0.6" scaleY="0.6" stroke="BLACK" strokeWidth="2.0" />
+               </graphic>
+            </Button>
+            <Button fx:id="openSettingsButton" alignment="CENTER" maxHeight="-Infinity" maxWidth="60.0" minHeight="-Infinity" minWidth="30.0" mnemonicParsing="false" onAction="#openSettings" prefHeight="30.0" prefWidth="30.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <graphic>
+                  <SVGPath content="m 497.569,215.166 -55.345,-13.064c -4.032,-13.946 -9.495,-27.27 -16.376,-39.732l 29.85,-48.303c 4.57,-7.397 3.452,-16.946 -2.688,-23.086l -31.99,-31.99c -6.129,-6.129 -15.678,-7.248 -23.076,-2.678L 349.652,86.164C 337.19,79.282 323.867,73.82 309.92,69.787L 296.856,14.419C 294.856,5.978 287.306,0 278.63,0h -45.237c -8.678,0 -16.227,5.978 -18.227,14.419l -13.064,55.368c -13.946,4.032 -27.27,9.484 -39.732,16.377L 114.067,56.292C 106.68,51.743 97.121,52.851 90.981,58.991L 58.99,90.97c -6.13,6.14 -7.248,15.709 -2.689,23.087l 29.862,48.313c -6.882,12.462 -12.344,25.786 -16.367,39.721L 14.418,215.156C 5.978,217.165 0,224.704 0,233.392v 45.226c 0,8.678 5.978,16.237 14.419,18.226l 55.378,13.065c 4.032,13.946 9.485,27.259 16.367,39.71l -29.872,48.324c -4.549,7.398 -3.441,16.957 2.699,23.098L 90.97,453.02c 6.14,6.14 15.709,7.257 23.087,2.688l 48.323,-29.872c 12.463,6.882 25.786,12.344 39.722,16.366l 13.064,55.366c 2,8.463 9.549,14.431 18.227,14.431h 45.237c 8.677,0 16.226,-5.968 18.226,-14.431l 13.064,-55.366c 13.937,-4.021 27.259,-9.484 39.712,-16.366l 48.312,29.861c 7.398,4.57 16.947,3.452 23.087,-2.688l 31.989,-31.99c 6.13,-6.129 7.248,-15.688 2.678,-23.087L 425.837,349.63c 6.893,-12.452 12.345,-25.774 16.377,-39.721L 497.58,296.844C 506.043,294.843 512,287.305 512,278.618V 233.38c 0,-8.666 -5.968,-16.215 -14.431,-18.214zM 256.00395,322.45534c -36.68383,0 -66.44623,-29.76382 -66.44623,-66.46034 0,-36.69652 29.76381,-66.46034 66.44623,-66.46034 36.69652,0 66.46033,29.76382 66.46033,66.46034 0,36.69652 -29.76381,66.46034 -66.46033,66.46034z" scaleX="0.03" scaleY="0.03" />
+               </graphic>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="runAppButton" alignment="CENTER" maxHeight="-Infinity" maxWidth="60.0" minHeight="-Infinity" minWidth="30.0" mnemonicParsing="false" onAction="#runApplication" prefHeight="30.0" prefWidth="30.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <padding>
+                  <Insets bottom="-1.0" />
+               </padding>
+            </Button>
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <padding>
+            <Insets right="9.0" />
+         </padding>
       </HBox>
    </children>
 </VBox>
