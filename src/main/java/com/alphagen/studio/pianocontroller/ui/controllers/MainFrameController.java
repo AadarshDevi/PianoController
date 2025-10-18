@@ -27,6 +27,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.sound.midi.MidiDevice;
 import javax.sound.midi.MidiUnavailableException;
+import javax.sound.midi.Transmitter;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
@@ -35,6 +36,7 @@ import java.util.HashMap;
 public class MainFrameController {
     private static final Logger logger = LogManager.getLogger(MainFrameController.class);
 
+    private static Thread receiverThread = null;
     boolean selectMidiUIOpen;
     boolean isRunning = false;
     private File configFile;
@@ -60,6 +62,10 @@ public class MainFrameController {
     private Button runAppButton;
     @FXML
     private HBox configButtonContainer;
+
+    public static Thread getReceiverThread() {
+        return receiverThread;
+    }
 
     @FXML
     public void initialize() {
@@ -200,6 +206,8 @@ public class MainFrameController {
 
     @FXML
     public void runApplication() {
+
+
         logger.info("run");
 
         validConfigFile();
@@ -244,7 +252,15 @@ public class MainFrameController {
         isRunning();
 
         MidiDeviceReceiver mdr = new MidiDeviceReceiver(midiDevice.getDeviceInfo().getName());
-        Thread receiverThread = new Thread(mdr);
+
+        try {
+            Transmitter transmitter = midiDevice.getTransmitter();
+            transmitter.setReceiver(mdr);
+        } catch (MidiUnavailableException e) {
+            logger.error("Unable to get Transmitter for MidiDevice: " + midiDevice.getDeviceInfo().getName());
+        }
+
+        receiverThread = new Thread(mdr);
         receiverThread.start();
 
         try {
@@ -252,12 +268,6 @@ public class MainFrameController {
         } catch (MidiUnavailableException e) {
             logger.error("Unable to Open Midi Device");
         }
-    }
-
-    public void setMidiDevice(MidiDevice midiDevice) {
-        logger.info("Set Midi Device: {}", midiDevice.getDeviceInfo().getName());
-        this.midiDevice = midiDevice;
-        midiDeviceNameLabel.setText(this.midiDevice.getDeviceInfo().getName());
     }
 
     public File getConfigFile() {
@@ -271,6 +281,7 @@ public class MainFrameController {
             runAppButton.setBackground(new Background(new BackgroundFill(Paint.valueOf("#bf3434"), new CornerRadii(5), Insets.EMPTY)));
             isRunning = false;
         } else {
+            if (midiDevice != null) midiDevice.close();
             runAppButton.setText("▶");
             runAppButton.setPrefWidth(30);
             runAppButton.setBackground(new Background(new BackgroundFill(Paint.valueOf("#42bf34"), new CornerRadii(5), Insets.EMPTY)));
@@ -310,5 +321,15 @@ public class MainFrameController {
             configFileNameLabel.setTextFill(Color.BLACK); // default text color
             configFileNameLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("#f4f4f4"), new CornerRadii(0), Insets.EMPTY)));
         }
+    }
+
+    public MidiDevice getMidiDevice() {
+        return midiDevice;
+    }
+
+    public void setMidiDevice(MidiDevice midiDevice) {
+        logger.info("Set Midi Device: {}", midiDevice.getDeviceInfo().getName());
+        this.midiDevice = midiDevice;
+        midiDeviceNameLabel.setText(this.midiDevice.getDeviceInfo().getName());
     }
 }
