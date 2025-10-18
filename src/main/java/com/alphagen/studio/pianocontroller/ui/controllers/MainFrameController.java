@@ -15,7 +15,10 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.FileChooser;
@@ -34,43 +37,77 @@ import java.nio.file.FileAlreadyExistsException;
 import java.util.HashMap;
 
 public class MainFrameController {
+
+    /**
+     * This is the logger for this class
+     */
     private static final Logger logger = LogManager.getLogger(MainFrameController.class);
 
+    /**
+     * This is a thread that will run MidiDeviceReceiver to get Midi input
+     *
+     * @see MidiDeviceReceiver
+     */
     private static Thread receiverThread = null;
-    boolean selectMidiUIOpen;
-    boolean isRunning = false;
-    private File configFile;
-    private MidiDevice midiDevice;
-    private SaveReader saveReader;
-    @FXML
-    private Label configFileNameLabel;
-    @FXML
-    private Button config_file_open;
-    @FXML
-    private Button config_file_create;
-    @FXML
-    private Button config_file_save;
-    @FXML
-    private Label midiDeviceNameLabel;
-    @FXML
-    private Button selectMidiDeviceButton;
-    @FXML
-    private Label ui_type_name;
-    @FXML
-    private Button ui_type_select;
-    @FXML
-    private Button runAppButton;
-    @FXML
-    private Button stopAppButton;
-    @FXML
-    private HBox configButtonContainer;
 
+    /**
+     * This is used to check if the Midi Device Selection Window is open
+     */
+    boolean selectMidiUIOpen;
+
+    /**
+     * This is used to know if the app is reading midi data
+     */
+    boolean isRunning = false;
+
+    /**
+     * this is a file that will contain the Config File used to map piano keys
+     * to keyboard keys
+     */
+    private File configFile;
+
+    /**
+     * This is the midi device that will connect and send data to the app.
+     */
+    private MidiDevice midiDevice;
+
+    /**
+     * This is the Config File Reader of "configFile"
+     */
+    private SaveReader saveReader;
+
+    // UI Labels
+
+    // config buttons
+    @FXML private Label configFileNameLabel; // File
+    @FXML private Button openConfigButton; // open config
+    @FXML private Button createConfigButton; // create config
+    @FXML private Button saveConfigButton; // save config
+
+    // midi device selection
+    @FXML private Label midiDeviceNameLabel; // midi device
+    @FXML private Button selectMidiDeviceButton;
+
+    // ui selection
+    @FXML private Label uiTypeLabel; // ui type
+    @FXML private Button uiTypeButton; // ui type
+
+    // app processes
+    @FXML private Button runAppButton; // run app
+    @FXML private Button stopAppButton; // stop app (not quit/close app)
+
+    /**
+     * gets the thread used to get piano input
+     */
     public static Thread getReceiverThread() {
         return receiverThread;
     }
 
-    @FXML
-    public void initialize() {
+    /**
+     * The first method called when the Controller is created.
+     * sets up the process buttons (run/stop)
+     */
+    @FXML public void initialize() {
         logger.info("Initialized");
         selectMidiUIOpen = false;
 
@@ -87,8 +124,11 @@ public class MainFrameController {
         isRunning();
     }
 
-    @FXML
-    public void openConfigFile() {
+    /**
+     * Shows a File chooser if the config file is null. gets the file, opens and
+     * reads the data used to map piano keys to keyboard keys
+     */
+    @FXML public void openConfigFile() {
         File config = null;
         if (configFile == null) {
             logger.info("Open Config File Chooser");
@@ -122,13 +162,20 @@ public class MainFrameController {
         validConfigFile();
     }
 
-    @FXML
-    public void saveConfigFile() {
+    /**
+     * Note: this might need some though and rework
+     * save the current config file as a new file somewhere else.
+     * or overwrite existing file and use it instead
+     */
+    @FXML public void saveConfigFile() {
         System.out.println("save");
     }
 
-    @FXML
-    public void createConfigFile() {
+    /**
+     * creates a new config file using the numbers given by the
+     * user in the ui
+     */
+    @FXML public void createConfigFile() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save File");
 
@@ -158,15 +205,20 @@ public class MainFrameController {
         }
     }
 
-    @FXML
-    public void selectMidiDevice() throws IOException {
+    /**
+     * This opens the ui that lists the midi devices connected to the Laptop/PC
+     *
+     * @throws IOException unable to get fxml for Device Selection
+     * @see MidiDeviceSelectionController
+     */
+    @FXML public void selectMidiDevice() throws IOException {
 
         if (!selectMidiUIOpen) {
             selectMidiUIOpen = true;
             logger.info("Midi Device Selection Window Open");
 
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("fxml/SelectMidiDevice_V1.fxml"));
-            VBox midiSelection = fxmlLoader.load();
+            VBox midiSelection = fxmlLoader.load(); // throws IOException
             MidiDeviceSelectionController midiDeviceSelectionController = fxmlLoader.getController();
             ControllerManager.setMidiDeviceSelectionController(midiDeviceSelectionController);
 
@@ -196,23 +248,35 @@ public class MainFrameController {
         }
     }
 
+    /**
+     * Quits the app.
+     *
+     * @param stage the correct window to close
+     */
     public void quit(Stage stage) {
         logger.info("Midi Device Selection Window Closed");
         selectMidiUIOpen = false;
         stage.close();
     }
 
+    /**
+     * Setter for selectMidiUIOpen. sets that the selection window is either closed or opened.
+     *
+     * @param selectMidiUIOpen is the selection window for the midi device open?
+     */
     public void setSelectMidiUIOpen(boolean selectMidiUIOpen) {
         this.selectMidiUIOpen = selectMidiUIOpen;
     }
 
-    @FXML
-    public void selectUIType() {
+    @FXML public void selectUIType() {
         System.out.println("ui");
     }
 
-    @FXML
-    public void runApplication() {
+    /**
+     * This method is really important. This method checks if the values are not null
+     * and empty and valid before running the app to get data from the midi device.
+     */
+    @FXML public void runApplication() {
 
 
         logger.info("run");
@@ -230,15 +294,7 @@ public class MainFrameController {
 
         if (keyMap == null || mouseMap == null || keyMap.isEmpty()) {
             logger.error("Data is unparsed or empty");
-            configButtonContainer.setBorder(new Border(new BorderStroke(
-                    Color.RED,
-                    BorderStrokeStyle.SOLID,
-                    CornerRadii.EMPTY,
-                    BorderWidths.DEFAULT
-            )));
             return;
-        } else {
-            configButtonContainer.setBorder(null);
         }
 
         if (midiDevice == null) {
@@ -277,6 +333,10 @@ public class MainFrameController {
         }
     }
 
+    /**
+     * checks if the app is running. Used to hide/show the process buttons
+     * run/stop.
+     */
     public void isRunning() {
         if (isRunning) {
             isRunning = false;
@@ -293,12 +353,17 @@ public class MainFrameController {
         }
     }
 
-    @FXML
-    public void openSettings() {
+    /**
+     * Opens the settings ui
+     */
+    @FXML public void openSettings() {
     }
 
-    @FXML
-    public void resetData() {
+    /**
+     * resets all the data in the MainUI, the config file, file reader, selected
+     * midi device and ui type.
+     */
+    @FXML public void resetData() {
         midiDevice = null;
         saveReader = null;
         configFile = null;
@@ -315,6 +380,9 @@ public class MainFrameController {
         isRunning();
     }
 
+    /**
+     * checks if the config file selected does not exist or is not valid or is empty
+     */
     public void validConfigFile() {
         if (saveReader == null) {
             logger.error("ConfigReader is null");
@@ -327,16 +395,30 @@ public class MainFrameController {
         }
     }
 
+    /**
+     * gets the midi device used to get input
+     *
+     * @return midi device that gives the app input data
+     */
     public MidiDevice getMidiDevice() {
         return midiDevice;
     }
 
+    /**
+     * sets the midi device to be used to get data
+     *
+     * @param midiDevice Midi Device to connect to
+     */
     public void setMidiDevice(MidiDevice midiDevice) {
         logger.info("Set Midi Device: {}", midiDevice.getDeviceInfo().getName());
         this.midiDevice = midiDevice;
         midiDeviceNameLabel.setText(this.midiDevice.getDeviceInfo().getName());
     }
 
+    /**
+     * Used to stop getting data from the midi device. Does not
+     * quit or close the app.
+     */
     public void stopApplication() {
         midiDevice.close();
         isRunning = false;

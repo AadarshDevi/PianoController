@@ -28,9 +28,9 @@
                   <Insets left="10.0" />
                </padding>
             </Label>
-            <Button fx:id="config_file_open" mnemonicParsing="false" onAction="#openConfigFile" text="Open" />
-            <Button fx:id="config_file_create" mnemonicParsing="false" onAction="#createConfigFile" text="Create" />
-            <Button fx:id="config_file_save" mnemonicParsing="false" onAction="#saveConfigFile" text="Save" />
+            <Button fx:id="openConfigButton" mnemonicParsing="false" onAction="#openConfigFile" text="Open" />
+            <Button fx:id="createConfigButton" mnemonicParsing="false" onAction="#createConfigFile" text="Create" />
+            <Button fx:id="saveConfigButton" mnemonicParsing="false" onAction="#saveConfigFile" text="Save" />
          </children>
       </HBox>
       <Label fx:id="midiDeviceNameLabel" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="40.0" text="Midi Device">
@@ -50,7 +50,7 @@
             </Button>
          </children>
       </HBox>
-      <Label fx:id="ui_type_name" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="40.0" text="UI Type">
+      <Label fx:id="uiTypeLabel" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="40.0" text="UI Type">
          <font>
             <Font name="Cascadia Mono Regular" size="16.0" />
          </font>
@@ -62,7 +62,7 @@
          <children>
             <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="300.0" spacing="5.0" HBox.hgrow="ALWAYS">
                <children>
-                  <Button fx:id="ui_type_select" mnemonicParsing="false" onAction="#selectUIType" text="Select UI Type">
+                  <Button fx:id="uiTypeButton" mnemonicParsing="false" onAction="#selectUIType" text="Select UI Type">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
