@@ -26,12 +26,13 @@ public class MidiDeviceChecker {
             try {
 
                 midiDevice.getTransmitter();
-                ControllerManager.getMidiDeviceSelectionController().setMidiDevice(midiDevice);
+                if (ControllerManager.getMidiDeviceSelectionController() != null)
+                    ControllerManager.getMidiDeviceSelectionController().setMidiDevice(midiDevice);
 
                 midiDevice.close();
                 logger.info("Connectable MidiDevice Closed: {}", midiDevice.getDeviceInfo().getName());
-
-                ControllerManager.getMidiDeviceSelectionController().unique();
+                if (ControllerManager.getMidiDeviceSelectionController() != null)
+                    ControllerManager.getMidiDeviceSelectionController().unique();
                 return true;
 
             } catch (MidiUnavailableException e) {
