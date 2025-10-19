@@ -12,6 +12,8 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -29,6 +31,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.sound.midi.MidiDevice;
+import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Transmitter;
 import java.io.File;
@@ -99,6 +102,13 @@ public class MainFrameController {
     // app processes
     @FXML private Button runAppButton; // run app
     @FXML private Button stopAppButton; // stop app (not quit/close app)
+    @FXML private Button testButton; // testing action
+    @FXML private Button openSettingsButton; // opens settings
+    @FXML private Button resetDataButton; // reset data in app
+
+    @FXML private Button getKeyValueButton; // reset data in app
+    @FXML private TextField pianoKeyNumTextField; // reset data in app
+    @FXML private Label keyboardKeyLabel; // reset data in app
 
     /**
      * gets the thread used to get piano input
@@ -115,16 +125,23 @@ public class MainFrameController {
         logger.info("Initialized");
         selectMidiUIOpen = false;
 
-        runAppButton.setTextFill(Paint.valueOf("#ffffff"));
-        runAppButton.setText("▶");
-        runAppButton.setPrefWidth(30);
-        runAppButton.setBackground(new Background(new BackgroundFill(Paint.valueOf("#42bf34"), new CornerRadii(5), Insets.EMPTY)));
+        pianoKeyNumTextField.setOnKeyPressed(event -> {
+            switch (event.getCode()) {
+                case KeyCode.ENTER -> {
+                    getKeyValue();
+                    pianoKeyNumTextField.selectAll();
+                }
+                case KeyCode.ESCAPE -> {
+                    pianoKeyNumTextField.getScene().getRoot().requestFocus();
+                }
+            }
+        });
 
-        stopAppButton.setTextFill(Paint.valueOf("#ffffff"));
-        stopAppButton.setText("⏹");
-        stopAppButton.setPrefWidth(30);
-        stopAppButton.setBackground(new Background(new BackgroundFill(Paint.valueOf("#bf3434"), new CornerRadii(5), Insets.EMPTY)));
-
+        runAppButton.setTooltip(new Tooltip("Run"));
+        stopAppButton.setTooltip(new Tooltip("Stop"));
+        openSettingsButton.setTooltip(new Tooltip("Settings"));
+        resetDataButton.setTooltip(new Tooltip("Reset"));
+        testButton.setTooltip(new Tooltip("Test"));
         isRunning();
     }
 
@@ -282,7 +299,6 @@ public class MainFrameController {
      */
     @FXML public void runApplication() {
 
-
         logger.info("run");
 
         validConfigFile();
@@ -344,16 +360,22 @@ public class MainFrameController {
     public void isRunning() {
         if (isRunning) {
             isRunning = false;
-            runAppButton.setVisible(false);
-            runAppButton.setManaged(false);
-            stopAppButton.setVisible(true);
-            stopAppButton.setManaged(true);
+            runAppButton.setDisable(true);
+            stopAppButton.setDisable(false);
+            testButton.setDisable(true);
         } else {
             isRunning = true;
-            stopAppButton.setVisible(false);
-            stopAppButton.setManaged(false);
-            runAppButton.setVisible(true);
-            runAppButton.setManaged(true);
+            runAppButton.setDisable(false);
+            stopAppButton.setDisable(true);
+            testButton.setDisable(false);
+        }
+
+        if (saveReader == null) {
+            getKeyValueButton.setDisable(true);
+            pianoKeyNumTextField.setDisable(true);
+        } else {
+            getKeyValueButton.setDisable(false);
+            pianoKeyNumTextField.setDisable(false);
         }
     }
 
@@ -427,6 +449,44 @@ public class MainFrameController {
         midiDevice.close();
         isRunning = false;
         isRunning();
+    }
+
+    @FXML public void testAction() {
+        configFile = new JFSFile("D:/piano_config_1.piano.txt");
+        try {
+            saveReader = new SaveReader((JFSFile) configFile);
+            saveReader.readAll();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (JSFFileNullException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            midiDevice = MidiSystem.getMidiDevice(MidiSystem.getMidiDeviceInfo()[5]);
+            logger.debug(midiDevice.getDeviceInfo().getName());
+        } catch (MidiUnavailableException e) {
+            throw new RuntimeException(e);
+        }
+        runApplication();
+    }
+
+    @FXML private void getKeyValue() {
+        try {
+            int pianoKey = Integer.parseInt(pianoKeyNumTextField.getText());
+            int keyboardKey = saveReader.getKeyMap().get(pianoKey);
+            logger.info(keyboardKey);
+            keyboardKeyLabel.setText(Integer.toString(keyboardKey));
+        } catch (NumberFormatException e) {
+            logger.info(-1);
+            keyboardKeyLabel.setText(Integer.toString(-1));
+        } catch (NullPointerException e) {
+            logger.info("NL");
+            keyboardKeyLabel.setText("NL");
+        }
     }
 
 }

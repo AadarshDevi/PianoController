@@ -75,8 +75,7 @@ public class Main extends Application {
         // setting up stage for use
         stage.setScene(scene);
         stage.setTitle("Piano Controller Dev Build 2.1.0.1.0");
-        stage.setResizable(true);
-        stage.setMaxHeight(240);
+        stage.setResizable(false);
         stage.show();
         stage.setOnCloseRequest(event -> {
             quit();
