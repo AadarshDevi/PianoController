@@ -6,25 +6,26 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="230.0" prefWidth="500.0" style="-fx-background-color: #2c2c3c;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.alphagen.studio.pianocontroller.ui.controllers.MainFrameController">
+<BorderPane fx:id="basePane" prefHeight="241.0" prefWidth="504.0" stylesheets="@../css/stylesheet.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.alphagen.studio.pianocontroller.ui.controllers.MainFrameController">
    <center>
-      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="220.0" prefWidth="500.0" style="-fx-background-color: #1e1f22;">
+      <VBox fx:id="mainPage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="220.0" prefWidth="500.0" stylesheets="@../css/stylesheet.css" BorderPane.alignment="TOP_CENTER">
          <children>
-            <Label fx:id="configFileNameLabel" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-text-fill: #ffffff;" text="Config File">
+            <Label fx:id="configFileNameLabel" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="30.0" text="Config File">
                <font>
                   <Font name="Cascadia Mono Regular" size="16.0" />
                </font>
-               <padding>
-                  <Insets left="10.0" />
-               </padding>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
             </Label>
             <HBox fx:id="configButtonContainer" alignment="CENTER_LEFT" maxHeight="-Infinity" prefHeight="40.0" prefWidth="600.0" spacing="5.0" VBox.vgrow="NEVER">
                <children>
-                  <Label maxHeight="1.7976931348623157E308" prefHeight="30.0" style="-fx-text-fill: #ffffff;" text="Config:">
+                  <Label maxHeight="1.7976931348623157E308" prefHeight="30.0" text="Config:">
                      <font>
                         <Font name="Cascadia Mono Regular" size="14.0" />
                      </font>
@@ -32,7 +33,7 @@
                         <Insets left="10.0" />
                      </padding>
                   </Label>
-                  <Button fx:id="openConfigButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openConfigFile" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: #1ABC9C;">
+                  <Button fx:id="openConfigButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openConfigFile" prefHeight="30.0" prefWidth="30.0">
                      <graphic>
                         <SVGPath content="M 1 5C 1 3.34315 2.34315 2 4 2H 8.55848C 9.84977 2 10.9962 2.82629 11.4045 4.05132L 11.7208 5H 20C 21.1046 5 22 5.89543 22 7V 9.00961C 23.1475 9.12163 23.9808 10.196 23.7695 11.3578L 22.1332 20.3578C 21.9603 21.3087 21.132 22 20.1654 22H 3C 1.89543 22 1 21.1046 1 20V 5ZM 20 9V 7H 11.7208C 10.8599 7 10.0956 6.44914 9.82339 5.63246L 9.50716 4.68377C 9.37105 4.27543 8.98891 4 8.55848 4H 4C 3.44772 4 3 4.44772 3 5V 12.2709L 3.35429 10.588C 3.54913 9.66249 4.36562 9 5.31139 9H 20ZM 3.36634 20C 3.41777 19.9109 3.4562 19.8122 3.47855 19.706L 5.31139 11L 21 11H 21.8018L 20.1654 20L 3.36634 20Z" fill="WHITE" scaleX="0.75" scaleY="0.75" />
                      </graphic>
@@ -40,7 +41,7 @@
                         <Insets left="1.0" />
                      </padding>
                   </Button>
-                  <Button fx:id="createConfigButton" layoutX="83.0" layoutY="15.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#createConfigFile" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: #9B59B6;">
+                  <Button fx:id="createConfigButton" layoutX="83.0" layoutY="15.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#createConfigFile" prefHeight="30.0" prefWidth="30.0">
                      <graphic>
                         <SVGPath content="M 4.0000195 1.0000195C 2.3553167 1.0000195 1.0000195 2.3553167 1.0000195 4.0000195L 1.0000195 19.99998C 1.0000195 21.644683 2.3553167 22.99998 4.0000195 22.99998L 19.99998 22.99998C 21.644683 22.99998 22.99998 21.644683 22.99998 19.99998L 22.99998 4.0000195C 22.99998 2.3553167 21.644683 1.0000195 19.99998 1.0000195L 4.0000195 1.0000195zM 4.0000195 3L 19.99998 3C 20.571277 3 21 3.4287223 21 4.0000195L 21 19.99998C 21 20.571277 20.571277 21 19.99998 21L 4.0000195 21C 3.4287223 21 3 20.571277 3 19.99998L 3 4.0000195C 3 3.4287223 3.4287223 3 4.0000195 3zM 12 7.5A 1 1 0 0 0 10.99998 8.5000195L 10.99998 10.99998L 8.5000195 10.99998A 1 1 0 0 0 7.5 12A 1 1 0 0 0 8.5000195 13.00002L 10.99998 13.00002L 10.99998 15.49998A 1 1 0 0 0 12 16.5A 1 1 0 0 0 13.00002 15.49998L 13.00002 13.00002L 15.49998 13.00002A 1 1 0 0 0 16.5 12A 1 1 0 0 0 15.49998 10.99998L 13.00002 10.99998L 13.00002 8.5000195A 1 1 0 0 0 12 7.5z" fill="WHITE" scaleX="0.75" scaleY="0.75" />
                      </graphic>
@@ -48,7 +49,7 @@
                         <Insets top="1.0" />
                      </padding>
                   </Button>
-                  <Button fx:id="saveConfigButton" layoutX="221.0" layoutY="15.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#saveConfigFile" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: #F39C12;">
+                  <Button fx:id="saveConfigButton" layoutX="221.0" layoutY="15.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#saveConfigFile" prefHeight="30.0" prefWidth="30.0">
                      <graphic>
                         <SVGPath content="m 18.1716,1c 0.5304,0 1.0391,0.21071 1.4142,0.58579l 2.8284,2.82842C 22.7893,4.78929 23,5.29799 23,5.82843V 20c 0,1.6569 -1.3431,3 -3,3H 4C 2.34315,23 1,21.6569 1,20V 4C 1,2.34315 2.34315,1 4,1ZM 4,3C 3.44772,3 3,3.44772 3,4v 16c 0,0.5523 0.44772,1 1,1h 1v -6c 0,-1.6569 1.34315,-3 3,-3h 8c 1.6569,0 3,1.3431 3,3v 6h 1c 0.5523,0 1,-0.4477 1,-1V 6.82843C 21,6.29799 20.7893,5.78929 20.4142,5.41421L 18.5858,3.58579C 18.2107,3.21071 17.702,3 17.1716,3H 17v 2c 0,1.65685 -1.3431,3 -3,3H 10C 8.34315,8 7,6.65685 7,5V 3Zm 13,18v -6c 0,-0.5523 -0.4477,-1 -1,-1H 8c -0.55228,0 -1,0.4477 -1,1v 6zM 9,3h 6v 2c 0,0.55228 -0.4477,1 -1,1H 10C 9.44772,6 9,5.55228 9,5Z" fill="WHITE" scaleX="0.75" scaleY="0.75" />
                      </graphic>
@@ -60,7 +61,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" prefHeight="40.0" prefWidth="200.0" spacing="5.0" VBox.vgrow="NEVER">
                <children>
-                  <Button fx:id="selectMidiDeviceButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectMidiDevice" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: #6A5ACD;">
+                  <Button fx:id="selectMidiDeviceButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectMidiDevice" prefHeight="30.0" prefWidth="30.0">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
@@ -68,19 +69,22 @@
                         <SVGPath content="M 12 1.25C 12.2508 1.25 12.4849 1.37533 12.624 1.58397L 14.624 4.58397C 14.8538 4.92862 14.7607 5.39427 14.416 5.62404C 14.0714 5.8538 13.6057 5.76067 13.376 5.41603L 12.75 4.47708V 14.9919C 12.8713 14.93 12.9983 14.8767 13.1304 14.8326L 16.3953 13.7443C 16.9057 13.5742 17.25 13.0965 17.25 12.5585V 10.7084C 17.0498 10.6695 16.8169 10.5847 16.6161 10.3839C 16.3803 10.1481 16.3045 9.86791 16.275 9.64859C 16.2498 9.46137 16.2499 9.23958 16.25 9.03446V 8.96557C 16.2499 8.76046 16.2498 8.53866 16.275 8.35145C 16.3045 8.13212 16.3803 7.85193 16.6161 7.61613C 16.8519 7.38033 17.1321 7.3045 17.3514 7.27501C 17.5387 7.24984 17.7605 7.24993 17.9656 7.25001H 18.0345C 18.2396 7.24993 18.4614 7.24984 18.6486 7.27501C 18.8679 7.3045 19.1481 7.38033 19.3839 7.61613C 19.6197 7.85193 19.6955 8.13212 19.725 8.35145C 19.7502 8.53866 19.7501 8.76046 19.75 8.96557V 9.03447C 19.7501 9.23958 19.7502 9.46137 19.725 9.64859C 19.6955 9.86791 19.6197 10.1481 19.3839 10.3839C 19.1831 10.5847 18.9502 10.6695 18.75 10.7084V 12.5585C 18.75 13.7422 17.9926 14.793 16.8696 15.1674L 13.6047 16.2557C 13.0943 16.4258 12.75 16.9035 12.75 17.4415V 18.1454C 13.483 18.4421 14 19.1607 14 20C 14 21.1046 13.1046 22 12 22C 10.8954 22 10 21.1046 10 20C 10 19.1607 10.517 18.4421 11.25 18.1454V 14.4415C 11.25 13.9035 10.9057 13.4258 10.3953 13.2557L 7.13037 12.1674C 6.00743 11.793 5.25 10.7422 5.25 9.55848V 7.58159C 4.65876 7.30073 4.25 6.6981 4.25 6C 4.25 5.0335 5.0335 4.25 6 4.25C 6.9665 4.25 7.75 5.0335 7.75 6C 7.75 6.6981 7.34124 7.30073 6.75 7.58159V 9.55848C 6.75 10.0965 7.09429 10.5742 7.60472 10.7443L 10.8696 11.8326C 11.0017 11.8767 11.1287 11.93 11.25 11.9919V 4.47708L 10.624 5.41603C 10.3943 5.76067 9.92862 5.8538 9.58397 5.62404C 9.23933 5.39427 9.1462 4.92862 9.37596 4.58397L 11.376 1.58397C 11.5151 1.37533 11.7492 1.25 12 1.25Z" fill="WHITE" scaleX="0.9" scaleY="0.9" />
                      </graphic>
                   </Button>
-                  <Label fx:id="midiDeviceNameLabel" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-text-fill: #ffffff;" text="Midi Device" HBox.hgrow="ALWAYS">
+                  <Label fx:id="midiDeviceNameLabel" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="30.0" text="Midi Device" HBox.hgrow="ALWAYS">
                      <font>
                         <Font name="Cascadia Mono Regular" size="16.0" />
                      </font>
                      <padding>
-                        <Insets left="10.0" />
+                        <Insets left="5.0" />
                      </padding>
                   </Label>
                </children>
+               <padding>
+                  <Insets right="5.0" />
+               </padding>
             </HBox>
             <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" prefHeight="40.0" prefWidth="200.0" spacing="5.0" VBox.vgrow="NEVER">
                <children>
-                  <Button fx:id="uiTypeButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectUIType" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: #FF6F61;">
+                  <Button fx:id="uiTypeButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectUIType" prefHeight="30.0" prefWidth="30.0">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
@@ -91,15 +95,18 @@
                         <Insets right="1.0" />
                      </padding>
                   </Button>
-                  <Label fx:id="uiTypeLabel" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-text-fill: #ffffff;" text="UI Type" HBox.hgrow="ALWAYS">
+                  <Label fx:id="uiTypeLabel" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="30.0" text="UI Type" HBox.hgrow="ALWAYS">
                      <font>
                         <Font name="Cascadia Mono Regular" size="16.0" />
                      </font>
                      <padding>
-                        <Insets left="10.0" />
+                        <Insets left="5.0" />
                      </padding>
                   </Label>
                </children>
+               <padding>
+                  <Insets right="5.0" />
+               </padding>
             </HBox>
             <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="47.0" prefWidth="500.0" spacing="5.0" VBox.vgrow="NEVER">
                <children>
@@ -107,7 +114,7 @@
                      <children>
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" HBox.hgrow="ALWAYS">
                            <children>
-                              <Button fx:id="getKeyValueButton" alignment="CENTER" maxHeight="-Infinity" maxWidth="60.0" minHeight="-Infinity" minWidth="30.0" mnemonicParsing="false" onAction="#getKeyValue" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: #8a2be2;">
+                              <Button fx:id="getKeyValueButton" alignment="CENTER" maxHeight="-Infinity" maxWidth="60.0" minHeight="-Infinity" minWidth="30.0" mnemonicParsing="false" onAction="#getKeyValue" prefHeight="30.0" prefWidth="30.0">
                                  <font>
                                     <Font size="15.0" />
                                  </font>
@@ -115,14 +122,14 @@
                                     <SVGPath content="M 15.7955 15.8111L 21 21M 18 10.5C 18 14.6421 14.6421 18 10.5 18C 6.35786 18 3 14.6421 3 10.5C 3 6.35786 6.35786 3 10.5 3C 14.6421 3 18 6.35786 18 10.5Z" fill="#ffffff00" scaleX="0.75" scaleY="0.75" stroke="WHITE" strokeWidth="4.0" />
                                  </graphic>
                               </Button>
-                              <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" prefHeight="35.0" prefWidth="100.0" spacing="2.0" style="-fx-background-color: #a545ff; -fx-background-radius: 7; -fx-border-color: #8a2be2; -fx-border-radius: 5; -fx-border-width: 2;">
+                              <HBox fx:id="keyFinderContainer" alignment="CENTER_LEFT" maxHeight="-Infinity" prefHeight="35.0" prefWidth="100.0" spacing="2.0">
                                  <children>
-                                    <TextField fx:id="pianoKeyNumTextField" alignment="CENTER" prefHeight="30.0" prefWidth="45.0" promptText="PK" style="-fx-border-color: #a545ff; -fx-border-width: 1; -fx-background-radius: 6; -fx-border-radius: 5;">
+                                    <TextField fx:id="pianoKeyNumTextField" alignment="CENTER" prefHeight="30.0" prefWidth="45.0" promptText="PK">
                                        <font>
                                           <Font name="Cascadia Mono Regular" size="12.0" />
                                        </font>
                                     </TextField>
-                                    <Label fx:id="keyboardKeyLabel" alignment="CENTER" prefHeight="30.0" prefWidth="45.0" style="-fx-background-color: #a545ff; -fx-text-fill: white;" text="KK">
+                                    <Label fx:id="keyboardKeyLabel" alignment="CENTER" prefHeight="30.0" prefWidth="45.0" text="KK">
                                        <font>
                                           <Font name="Cascadia Mono Regular" size="14.0" />
                                        </font>
@@ -134,7 +141,7 @@
                               </HBox>
                            </children>
                         </HBox>
-                        <Button fx:id="testButton" alignment="CENTER" maxHeight="-Infinity" maxWidth="60.0" minHeight="-Infinity" minWidth="30.0" mnemonicParsing="false" onAction="#testAction" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: #2679ff;">
+                        <Button fx:id="testButton" alignment="CENTER" maxHeight="-Infinity" maxWidth="60.0" minHeight="-Infinity" minWidth="30.0" mnemonicParsing="false" onAction="#testAction" prefHeight="30.0" prefWidth="30.0">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -147,7 +154,7 @@
                         <Insets left="9.0" />
                      </padding>
                   </HBox>
-                  <Button fx:id="resetDataButton" alignment="CENTER" layoutX="400.0" layoutY="19.0" maxHeight="-Infinity" maxWidth="60.0" minHeight="-Infinity" minWidth="30.0" mnemonicParsing="false" onAction="#resetData" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: #ff7e1c;">
+                  <Button fx:id="resetDataButton" alignment="CENTER" layoutX="400.0" layoutY="19.0" maxHeight="-Infinity" maxWidth="60.0" minHeight="-Infinity" minWidth="30.0" mnemonicParsing="false" onAction="#resetData" prefHeight="30.0" prefWidth="30.0">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -158,7 +165,7 @@
                         <Insets top="1.0" />
                      </padding>
                   </Button>
-                  <Button fx:id="openSettingsButton" alignment="CENTER" maxHeight="-Infinity" maxWidth="60.0" minHeight="-Infinity" minWidth="30.0" mnemonicParsing="false" onAction="#openSettings" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: #6c757d;">
+                  <Button fx:id="openSettingsButton" alignment="CENTER" maxHeight="-Infinity" maxWidth="60.0" minHeight="-Infinity" minWidth="30.0" mnemonicParsing="false" onAction="#openSettings" prefHeight="30.0" prefWidth="30.0">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -169,7 +176,7 @@
                         <Insets />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="runAppButton" alignment="CENTER" layoutX="400.0" layoutY="19.0" maxHeight="-Infinity" maxWidth="60.0" minHeight="-Infinity" minWidth="30.0" mnemonicParsing="false" onAction="#runApplication" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: #42bf34;">
+                  <Button fx:id="runAppButton" alignment="CENTER" layoutX="400.0" layoutY="19.0" maxHeight="-Infinity" maxWidth="60.0" minHeight="-Infinity" minWidth="30.0" mnemonicParsing="false" onAction="#runApplication" prefHeight="30.0" prefWidth="30.0">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -177,7 +184,7 @@
                         <SVGPath content="m 151.43833,139.3973 -110.013454,0 55.006727,-95.274444z" fill="WHITE" rotate="90.0" scaleX="0.11" scaleY="0.11" />
                      </graphic>
                   </Button>
-                  <Button fx:id="stopAppButton" alignment="CENTER" layoutX="400.0" layoutY="19.0" maxHeight="-Infinity" maxWidth="60.0" minHeight="-Infinity" minWidth="30.0" mnemonicParsing="false" onAction="#stopApplication" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: #bf3434;" text="⏹" textFill="WHITE">
+                  <Button fx:id="stopAppButton" alignment="CENTER" layoutX="400.0" layoutY="19.0" maxHeight="-Infinity" maxWidth="60.0" minHeight="-Infinity" minWidth="30.0" mnemonicParsing="false" onAction="#stopApplication" prefHeight="30.0" prefWidth="30.0" text="⏹" textFill="WHITE">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -195,22 +202,29 @@
             </HBox>
          </children>
          <BorderPane.margin>
-            <Insets bottom="2.0" left="2.0" right="2.0" />
+            <Insets />
          </BorderPane.margin>
       </VBox>
    </center>
    <top>
-      <HBox fx:id="root" alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="20.0" prefWidth="200.0" spacing="3.0" BorderPane.alignment="CENTER">
+      <HBox fx:id="root" alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="18.0" prefWidth="200.0" spacing="3.0" BorderPane.alignment="CENTER">
          <children>
-            <Label maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0" text="Piano Controller" textFill="WHITE" HBox.hgrow="ALWAYS">
+            <StackPane fx:id="appLogoButton" prefHeight="16.0" prefWidth="16.0">
+               <children>
+                  <SVGPath content="M 1.7002869,14.750157V 9.7501572c 0,-3.31371 2.68629,-6 6,-6h 0.23529c 3.1838101,0 5.7647101,2.58095 5.7647101,5.76471 0,0.6822298 0.5531,1.2352898 1.2353,1.2352898h 1.7647c 1.6569,0 3,1.3431 3,3v 3.2c 0,1.6802 0,2.5202 -0.327,3.162 -0.2876,0.5645 -0.7465,1.0234 -1.311,1.311 -0.6418,0.327 -1.4818,0.327 -3.162,0.327H 6.5002869c -1.68016,0 -2.52024,0 -3.16197,-0.327 -0.56449,-0.2876 -1.02343,-0.7465 -1.31105,-1.311 -0.32698,-0.6418 -0.32698,-1.4818 -0.32698,-3.162zm 0,0H 19.700287m -14.0000001,0v 3m 3,-3v 3m 3.0000001,-3v 3m 4,-3v 3" fill="TRANSPARENT" scaleX="0.7" scaleY="0.7" stroke="WHITE" />
+                  <SVGPath content="m 22.339761,6.0676839c -0.09335,1.1934718 -2.764661,1.5458171 -4.355,1.9445977 -0.703253,0.1776091 -1.131236,0.5500599 -1.777043,1.1958657 -0.045,0.044999 -0.09047,0.089998 -0.135958,0.1354801 -0.04547,0.045475 -0.09048,0.091436 -0.135481,0.1359596 -0.645806,0.646763 -1.017299,1.074268 -1.194429,1.778478 -0.39926,1.591775 -0.750648,4.266434 -1.942683,4.359787 -0.02155,0.0014 -0.04308,0.0025 -0.06463,0.0025 -1.264803,0 -2.329019,-2.876205 -3.267806,-4.752344C 8.5131055,8.9602581 8.9214613,7.7232216 10.145092,6.4981536 10.37967,6.2630975 10.672173,5.9710727 11.029785,5.6129833c 0.36527,-0.3657491 0.799956,-0.800914 1.315069,-1.3165055 0.35761,-0.3580894 0.649636,-0.6496355 0.884692,-0.8851702 0.760221,-0.7607006 1.525231,-1.2063977 2.45205,-1.2063977 0.565379,0 1.191558,0.1651617 1.913003,0.5275597 1.906778,0.9560223 4.845696,2.0417802 4.745163,3.3357851z" fill="RED" scaleX="0.7" scaleY="0.7" translateX="5.0" translateY="-1.0" />
+                  <SVGPath content="M 18.98363,2.6036318C 18.613574,2.430168 18.263872,2.2664183 17.945161,2.1063691 17.128725,1.6974572 16.389075,1.4990146 15.683194,1.4990146c -1.421016,0 -2.403976,0.819674 -3.020583,1.43628L 9.672559,5.9285848c -1.6000293,1.6018799 -1.8553675,3.232439 -0.8280007,5.2876362 0.1595866,0.319174 0.3233361,0.669801 0.4967995,1.041245 0.9353172,2.000615 1.9020892,4.068765 3.4845412,4.068765 0.04441,0 0.08835,-0.0014 0.13322,-0.0052 1.632872,-0.12767 2.096367,-2.230513 2.505279,-4.084955 0.06476,-0.293732 0.126744,-0.575437 0.189654,-0.828 0.110093,-0.436666 0.326112,-0.707732 0.918664,-1.301672l 0.08142,-0.08188 0.04996,-0.049959 0.131833,-0.13137c 0.593934,-0.593876 0.864999,-0.8098959 1.302591,-0.9199877 0.25025,-0.06291 0.53103,-0.1248943 0.8243,-0.189191 1.853512,-0.4088937 3.954969,-0.8723889 4.082174,-2.5084989 0.128595,-1.659701 -2.00154,-2.6574645 -4.061826,-3.6219229zm 3.111246,3.5381978c -0.0902,1.153187 -2.671341,1.4936385 -4.207999,1.8789593 -0.679515,0.1716135 -1.093052,0.5314929 -1.71706,1.1554997 -0.04348,0.043482 -0.08742,0.086963 -0.131369,0.1309072 -0.04394,0.043945 -0.08743,0.088351 -0.130908,0.1313699 -0.624007,0.6249313 -0.982961,1.0380063 -1.154112,1.7184463 -0.385783,1.538045 -0.72531,4.122423 -1.877109,4.212625 -0.02082,0.0014 -0.04163,0.0024 -0.06245,0.0024 -1.22211,0 -2.250404,-2.77912 -3.157503,-4.591931 -0.921435,-1.8433396 -0.526863,-3.0386204 0.655465,-4.2223369 0.22666,-0.2271219 0.50929,-0.5092896 0.854831,-0.8552919 0.35294,-0.3534035 0.772954,-0.7738796 1.27068,-1.2720676 0.345539,-0.3460023 0.627707,-0.6277074 0.854829,-0.8552919 0.73456,-0.7350236 1.473748,-1.1656764 2.369283,-1.1656764 0.546295,0 1.151337,0.1595868 1.84843,0.5097522 1.842416,0.9237523 4.682133,1.9728611 4.584993,3.2231876zm -6.933924,0.4473052h 0.92514V 5.6639949h -0.92514zm 0,-1.38771h 0.92514V 4.2762849h -0.92514zm 1.38771,0h 0.925139V 4.2762849h -0.925139zm 0,1.38771h 0.925139V 5.6639949H 16.548662ZM 13.008614,9.3668672 13.36063,9.0148517c 0.173464,-0.1734636 0.173464,-0.4547062 0,-0.62817 -0.173464,-0.1734637 -0.454244,-0.1734637 -0.627708,0L 12.380907,8.7386975 12.028891,8.3866817c -0.173464,-0.1734637 -0.454244,-0.1734637 -0.627708,0 -0.173463,0.1734638 -0.173463,0.4547064 0,0.62817L 11.7532,9.3668672 11.401183,9.7188831c -0.173463,0.1734634 -0.173463,0.4547059 0,0.6277069 0.173464,0.173001 0.454707,0.173464 0.627708,0l 0.352016,-0.3520155 0.362192,0.3621915c 0.173464,0.173464 0.454243,0.173464 0.627708,0 0.173463,-0.173463 0.173463,-0.4547055 0,-0.628169z" fill="WHITE" scaleX="0.7" scaleY="0.7" translateX="5.0" translateY="-1.0" />
+               </children>
+            </StackPane>
+            <Label maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0" text="Piano Controller" HBox.hgrow="ALWAYS">
                <font>
                   <Font name="Cascadia Mono Regular" size="12.0" />
                </font>
-               <padding>
-                  <Insets left="4.0" />
-               </padding>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
             </Label>
-            <Button fx:id="minimizeAppButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#minimizeApp" prefHeight="16.0" prefWidth="40.0" style="-fx-background-color: #2c2c3c; -fx-background-radius: 0;">
+            <Button fx:id="minimizeAppButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#minimizeApp" prefHeight="17.0" prefWidth="40.0">
                <graphic>
                   <SVGPath content="M 28,0H 4C 1.791,0 0,1.79 0,4 0,6.21 1.791,8 4,8H 28C 30.209,8 32,6.21 32,4 32,1.79 30.209,0 28,0" fill="WHITE" scaleX="0.3" scaleY="0.3" stroke="BLACK" strokeWidth="0.0" />
                </graphic>
@@ -218,7 +232,7 @@
                   <Insets top="1.0" />
                </padding>
             </Button>
-            <Button fx:id="quitAppButton" layoutX="493.0" layoutY="13.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#quitApp" prefHeight="16.0" prefWidth="40.0" style="-fx-background-color: #2c2c3c; -fx-background-radius: 0;">
+            <Button fx:id="quitAppButton" layoutX="493.0" layoutY="13.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#quitApp" prefHeight="16.0" prefWidth="40.0">
                <graphic>
                   <SVGPath content="m 195.2,195.2a 64,64 0 0 1 90.496,0L 512,421.504 738.304,195.2A 64,64 0 0 1 828.8,285.696L 602.496,512 828.8,738.304A 64,64 0 0 1 738.304,828.8L 512,602.496 285.696,828.8A 64,64 0 0 1 195.2,738.304L 421.504,512 195.2,285.696a 64,64 0 0 1 0,-90.496z" fill="WHITE" scaleX="0.012" scaleY="0.012" />
                </graphic>

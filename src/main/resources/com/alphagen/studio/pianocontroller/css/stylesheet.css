@@ -1,0 +1,187 @@
+/* Root BorderPane background */
+#basePane {
+  -fx-background-color: #2c2c3c;
+  -fx-min-width: 500px; /* enforce size */
+  -fx-min-height: 230px;
+}
+
+/* Center VBox */
+#mainPage {
+  -fx-background-color: #1e1f22;
+  -fx-min-width: 500px;
+  -fx-min-height: 220px;
+  -fx-margin: 15px 0 0 0;
+}
+
+/* Labels with white text and Cascadia Mono font */
+.label {
+  -fx-text-fill: white;
+  -fx-font-family: "Cascadia Mono Regular";
+  -fx-background-color: transparent;
+}
+
+#configFileNameLabel {
+  -fx-font-size: 16px;
+  -fx-padding: 0 0 0 10px;
+}
+
+#configButtonContainer > .label {
+  -fx-font-size: 14px;
+  -fx-padding: 0 0 0 10px;
+}
+
+/* Buttons background colors and backgrounds-radius matching inline CSS */
+#openConfigButton {
+  -fx-background-color: #1abc9c;
+  -fx-background-radius: 0;
+  -fx-padding: 0 0 0 1px;
+}
+#openConfigButton:hover {
+  -fx-background-color: #15997e;
+}
+
+#createConfigButton {
+  -fx-background-color: #9b58b6;
+  -fx-background-radius: 0;
+  -fx-padding: 1px 0 0 0;
+}
+#createConfigButton:hover {
+  -fx-background-color: #7a3e90;
+}
+#saveConfigButton {
+  -fx-background-color: #f39c12;
+  -fx-background-radius: 0;
+  -fx-padding: 1px 0 0 0;
+}
+#saveConfigButton:hover {
+  -fx-background-color: rgb(176, 113, 11);
+}
+#selectMidiDeviceButton {
+  -fx-background-color: #6a5acd;
+  /* -fx-padding: 0 0 0 10px; */
+  -fx-background-radius: 0;
+}
+#selectMidiDeviceButton:hover {
+  -fx-background-color: #4d4297;
+}
+#uiTypeButton {
+  -fx-background-color: #ff6f61;
+  -fx-background-radius: 0;
+  -fx-padding: 0 1px 0 0;
+}
+#uiTypeButton:hover {
+  -fx-background-color: #b04b42;
+}
+
+/* Piano Key input group styling matching inline backgrounds and borders */
+#pianoKeyNumTextField {
+  /* -fx-background-color: transparent; */
+  -fx-border-color: #a545ff;
+  -fx-border-width: 1px;
+  -fx-background-radius: 6px;
+  -fx-border-radius: 5px;
+  -fx-font-family: "Cascadia Mono Regular";
+  -fx-font-size: 12px;
+  -fx-alignment: center;
+}
+#keyboardKeyLabel {
+  -fx-background-color: #a545ff;
+  -fx-text-fill: white;
+  -fx-font-family: "Cascadia Mono Regular";
+  -fx-font-size: 14px;
+  -fx-alignment: center;
+}
+
+/* Hover effect to brighten button background for user feedback */
+/* .button:hover {
+  -fx-opacity: 0.85;
+} */
+
+/* Minimize and Quit buttons exact background */
+#minimizeAppButton,
+#quitAppButton {
+  -fx-background-color: #2c2c3c;
+  -fx-background-radius: 0;
+}
+
+#minimizeAppButton:hover,
+#quitAppButton:hover {
+  -fx-background-color: #414157;
+  -fx-background-radius: 0;
+}
+
+/* Top label style */
+#root > .label {
+  -fx-text-fill: white;
+  -fx-font-family: "Cascadia Mono Regular";
+  -fx-font-size: 12px;
+  -fx-margin: 0px 3px 1px 0px;
+}
+
+/* Test Suite buttons to match inline button background colors and fonts */
+#getKeyValueButton {
+  -fx-background-color: #8a2be2;
+  -fx-font-size: 15px;
+}
+#getKeyValueButton:hover {
+  -fx-background-color: #691db0;
+}
+#testButton {
+  -fx-background-color: #2679ff;
+  -fx-font-size: 15px;
+}
+#testButton:hover {
+  -fx-background-color: #1458c5;
+}
+#resetDataButton {
+  -fx-background-color: #ff7e1c;
+  -fx-font-size: 15px;
+}
+#resetDataButton:hover {
+  -fx-background-color: #c05300;
+}
+#openSettingsButton {
+  -fx-background-color: #6c757d;
+  -fx-font-size: 15px;
+}
+#openSettingsButton:hover {
+  -fx-background-color: #454c52;
+}
+#runAppButton {
+  -fx-background-color: #42bf34;
+  -fx-font-size: 15px;
+}
+#runAppButton:hover {
+  -fx-background-color: #258d19;
+}
+#stopAppButton {
+  -fx-background-color: #bf3434;
+  -fx-font-size: 15px;
+  -fx-text-fill: white;
+}
+#stopAppButton:hover {
+  -fx-background-color: #861b1b;
+}
+
+#keyFinderContainer {
+  -fx-background-color: #a545ff;
+  -fx-background-radius: 7;
+  -fx-border-color: #8a2be2;
+  -fx-border-radius: 5;
+  -fx-border-width: 2;
+}
+
+.context-menu {
+  -fx-background-color: #333333;
+  -fx-border-color: #666666;
+  -fx-border-width: 2px;
+}
+
+.context-menu .menu-item {
+  -fx-text-fill: white;
+  -fx-background-color: #333333;
+}
+
+.context-menu .menu-item:hover {
+  -fx-background-color: #006fb4;
+}

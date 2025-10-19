@@ -10,18 +10,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -83,7 +76,13 @@ public class MainFrameController {
      */
     private SaveReader saveReader;
 
-    // UI Labels
+    // Root Pane
+    @FXML private HBox root;
+    @FXML private StackPane appLogoButton;
+
+    // Title Bar Window
+    @FXML private Button minimizeAppButton;
+    @FXML private Button quitAppButton;
 
     // config buttons
     @FXML private Label configFileNameLabel; // File
@@ -125,6 +124,17 @@ public class MainFrameController {
         logger.info("Initialized");
         selectMidiUIOpen = false;
 
+        ContextMenu contextMenu = new ContextMenu();
+        MenuItem menuItemAppLogoQuit = new MenuItem("Quit");
+        menuItemAppLogoQuit.setOnAction(event -> quitApp());
+        contextMenu.getItems().add(menuItemAppLogoQuit);
+
+        appLogoButton.setOnContextMenuRequested(event -> {
+            double screenX = appLogoButton.localToScreen(0, 0).getX() + 1;
+            double screenY = appLogoButton.localToScreen(0, 0).getY() + 18;
+            contextMenu.show(appLogoButton, screenX, screenY);
+        });
+
         pianoKeyNumTextField.setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case KeyCode.ENTER -> {
@@ -137,12 +147,27 @@ public class MainFrameController {
             }
         });
 
+        // TODO: Add tooltips to remaining buttons
         runAppButton.setTooltip(new Tooltip("Run"));
         stopAppButton.setTooltip(new Tooltip("Stop"));
         openSettingsButton.setTooltip(new Tooltip("Settings"));
         resetDataButton.setTooltip(new Tooltip("Reset"));
         testButton.setTooltip(new Tooltip("Test"));
         isRunning();
+
+        // This code makes the undecorated app draggable and being able to move freely
+        {
+            final Delta dragDelta = new Delta(); // contains x and y
+            root.setOnMousePressed(event -> { // moving starts when mouse is pressed on the root
+                dragDelta.x = event.getSceneX(); // gets initial position x
+                dragDelta.y = event.getSceneY(); // gets initial position y
+            });
+            root.setOnMouseDragged(event -> { // drag scene
+                Stage stage = (Stage) root.getScene().getWindow();
+                stage.setX(event.getScreenX() - dragDelta.x); // change global x with delta x
+                stage.setY(event.getScreenY() - dragDelta.y); // change global y with delta y
+            });
+        }
     }
 
     /**
@@ -150,18 +175,13 @@ public class MainFrameController {
      * reads the data used to map piano keys to keyboard keys
      */
     @FXML public void openConfigFile() {
-        File config = null;
-        if (configFile == null) {
-            logger.info("Open Config File Chooser");
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Choose Piano Config File");
-            fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Piano Config", "*.piano.txt"));
-            config = fileChooser.showOpenDialog(null);
-            validConfigFile();
-        }
+        logger.info("Open Config File Chooser");
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose Piano Config File");
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Piano Config", "*.piano.txt"));
+        File config = fileChooser.showOpenDialog(null);
 
         if (config != null) {
-            validConfigFile();
             this.configFile = config;
             logger.info("Loaded Config File: {}", config.getName());
             configFileNameLabel.setText(this.configFile.getName());
@@ -319,12 +339,12 @@ public class MainFrameController {
 
         if (midiDevice == null) {
             logger.error("There is no Midi Device connected");
-            midiDeviceNameLabel.setTextFill(Color.WHITE);
+//            midiDeviceNameLabel.setTextFill(Color.BLACK); // default text color
             midiDeviceNameLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("#9c0000"), new CornerRadii(0), Insets.EMPTY)));
             return;
         } else {
-            midiDeviceNameLabel.setTextFill(Color.BLACK); // default text color
-            midiDeviceNameLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("#f4f4f4"), new CornerRadii(0), Insets.EMPTY)));
+//            midiDeviceNameLabel.setTextFill(Color.WHITE);
+            midiDeviceNameLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("#f4f4f400"), new CornerRadii(0), Insets.EMPTY)));
         }
 
         if (!MidiDeviceChecker.checkDevice(midiDevice)) {
@@ -363,11 +383,13 @@ public class MainFrameController {
             runAppButton.setDisable(true);
             stopAppButton.setDisable(false);
             testButton.setDisable(true);
+            resetDataButton.setDisable(true);
         } else {
             isRunning = true;
             runAppButton.setDisable(false);
             stopAppButton.setDisable(true);
             testButton.setDisable(false);
+            resetDataButton.setDisable(false);
         }
 
         if (saveReader == null) {
@@ -395,13 +417,11 @@ public class MainFrameController {
         configFile = null;
         isRunning = false;
 
-        configFileNameLabel.setTextFill(Color.BLACK); // default text color
         configFileNameLabel.setText("Config File");
-        configFileNameLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("#f4f4f4"), new CornerRadii(0), Insets.EMPTY)));
+        configFileNameLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("#f4f4f400"), new CornerRadii(0), Insets.EMPTY)));
 
-        midiDeviceNameLabel.setTextFill(Color.BLACK); // default text color
         midiDeviceNameLabel.setText("Midi Device");
-        midiDeviceNameLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("#f4f4f4"), new CornerRadii(0), Insets.EMPTY)));
+        midiDeviceNameLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("#f4f4f400"), new CornerRadii(0), Insets.EMPTY)));
 
         isRunning();
     }
@@ -412,12 +432,20 @@ public class MainFrameController {
     public void validConfigFile() {
         if (saveReader == null) {
             logger.error("ConfigReader is null");
-            configFileNameLabel.setTextFill(Color.WHITE);
+            configFileNameLabel.setText("Invalid Config File");
             configFileNameLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("#9c0000"), new CornerRadii(0), Insets.EMPTY)));
-            return;
         } else {
-            configFileNameLabel.setTextFill(Color.BLACK); // default text color
-            configFileNameLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("#f4f4f4"), new CornerRadii(0), Insets.EMPTY)));
+            configFileNameLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("#f4f4f400"), new CornerRadii(0), Insets.EMPTY)));
+        }
+    }
+
+    public void validMidiDevice() {
+        if (saveReader == null) {
+            logger.error("Midi Device selected is null");
+            configFileNameLabel.setText("Invalid Midi Device");
+            midiDeviceNameLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("#9c0000"), new CornerRadii(0), Insets.EMPTY)));
+        } else {
+            midiDeviceNameLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("#f4f4f400"), new CornerRadii(0), Insets.EMPTY)));
         }
     }
 
@@ -439,6 +467,7 @@ public class MainFrameController {
         logger.info("Set Midi Device: {}", midiDevice.getDeviceInfo().getName());
         this.midiDevice = midiDevice;
         midiDeviceNameLabel.setText(this.midiDevice.getDeviceInfo().getName());
+        validMidiDevice();
     }
 
     /**
@@ -487,6 +516,19 @@ public class MainFrameController {
             logger.info("NL");
             keyboardKeyLabel.setText("NL");
         }
+    }
+
+    public void minimizeApp() {
+        Stage stage = (Stage) root.getScene().getWindow();
+        stage.setIconified(true);
+    }
+
+    public void quitApp() {
+        Main.quit();
+    }
+
+    private static class Delta {
+        double x, y;
     }
 
 }

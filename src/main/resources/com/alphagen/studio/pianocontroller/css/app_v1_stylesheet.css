@@ -1,0 +1,7 @@
+#minimizeAppButton:hover {
+  -fx-background-color: #ffe4c4;
+}
+
+#quitAppButton:hover {
+  -fx-background-color: #a20000;
+}

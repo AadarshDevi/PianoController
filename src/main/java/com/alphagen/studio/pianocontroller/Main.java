@@ -7,11 +7,13 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,6 +27,8 @@ public class Main extends Application {
      * the logger for the class
      */
     private static final Logger logger = LogManager.getLogger(Main.class);
+
+    private static final boolean testCSS = true;
 
     /**
      * This is the main method to stop and quit the app entirely. Stops all
@@ -57,8 +61,10 @@ public class Main extends Application {
         sceneManager.setStage(stage);
 
         // loads the main ui and the controller
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("fxml/App_V1.fxml"));
-        VBox mainframe = fxmlLoader.load();
+        FXMLLoader fxmlLoader;
+        if (testCSS) fxmlLoader = new FXMLLoader(Main.class.getResource("fxml/App_V4.fxml"));
+        else fxmlLoader = new FXMLLoader(Main.class.getResource("fxml/App_V3.fxml"));
+        BorderPane mainframe = fxmlLoader.load();
         MainFrameController mainFrameController = fxmlLoader.getController();
 
         // makes the main controller accessible to all the controllers
@@ -66,6 +72,8 @@ public class Main extends Application {
 
         // sets up the scene with app quit command
         Scene scene = new Scene(mainframe);
+        if (testCSS) scene.getStylesheets().add(Main.class.getResource("css/stylesheet.css").toExternalForm());
+        else scene.getStylesheets().add(Main.class.getResource("css/app_v1_stylesheet.css").toExternalForm());
         scene.setOnKeyPressed(keyEvent -> {
             if (new KeyCodeCombination(KeyCode.Q, KeyCombination.CONTROL_DOWN).match(keyEvent)) {
                 quit();
@@ -75,7 +83,9 @@ public class Main extends Application {
         // setting up stage for use
         stage.setScene(scene);
         stage.setTitle("Piano Controller Dev Build 2.1.0.1.0");
+        stage.initStyle(StageStyle.UNDECORATED);
         stage.setResizable(false);
+        stage.getIcons().add(new Image(Main.class.getResourceAsStream("images/app_logo_2.png")));
         stage.show();
         stage.setOnCloseRequest(event -> {
             quit();
