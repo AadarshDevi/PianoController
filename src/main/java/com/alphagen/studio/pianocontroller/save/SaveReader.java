@@ -80,8 +80,10 @@ public class SaveReader {
                     logger.info("Letter: " + letter + ", Key: " + key + ", Value: " + value);
                     keyMap.put(key, value);
                 } catch (IllegalAccessException e) {
+                    logger.error(e);
                     logger.error("Unable to access value for: " + letter);
                 } catch (NoSuchFieldException e) {
+                    logger.error(e);
                     logger.error("Field does not exist for: " + letter);
                 }
             }
@@ -107,8 +109,10 @@ public class SaveReader {
                     logger.info("Num: " + num + ", Key: " + key + ", Value: " + value);
                     keyMap.put(key, value);
                 } catch (IllegalAccessException e) {
+                    logger.error(e);
                     logger.error("Unable to access value for: " + num);
                 } catch (NoSuchFieldException e) {
+                    logger.error(e);
                     logger.error("Field does not exist for: " + num);
                 }
             }
@@ -129,8 +133,10 @@ public class SaveReader {
                     logger.info("NumPadNum: " + numPadNum + ", Key: " + key + ", Value: " + value);
                     keyMap.put(key, value);
                 } catch (IllegalAccessException e) {
+                    logger.error(e);
                     logger.error("Unable to access value for: " + numPadNum);
                 } catch (NoSuchFieldException e) {
+                    logger.error(e);
                     logger.error("Field does not exist for: " + numPadNum);
                 }
             }
@@ -143,21 +149,30 @@ public class SaveReader {
 
         for (String keyVal : specials) {
 
-            // Get key letter_value
-            String valueString = properties.get("SPECIAL_" + keyVal).toString();
-            boolean validValue = isValueValid(valueString);
 
-            if (validValue) {
-                try {
+            try {
+
+
+                // Get key letter_value
+                String valueString = properties.get("SPECIAL_" + keyVal).toString();
+                if (valueString == null) continue;
+                boolean validValue = isValueValid(valueString);
+                if (validValue) {
+
                     int value = Integer.parseInt(valueString);
                     int key = KeyEvent.class.getField("VK_" + keyVal).getInt(null); // get the VK_{number} of number
                     logger.info("Modifier: " + keyVal + ", Key: " + key + ", Value: " + value);
                     keyMap.put(key, value);
-                } catch (IllegalAccessException e) {
-                    logger.error("Unable to access value for: " + keyVal);
-                } catch (NoSuchFieldException e) {
-                    logger.error("Field does not exist for: " + keyVal);
                 }
+            } catch (IllegalAccessException e) {
+                logger.error("Unable to access value for: " + keyVal);
+                logger.error(e);
+            } catch (NoSuchFieldException e) {
+                logger.error("Field does not exist for: " + keyVal);
+                logger.error(e);
+            } catch (NullPointerException e) {
+                logger.error("Field is null");
+                logger.error(e);
             }
         }
     }
@@ -179,8 +194,10 @@ public class SaveReader {
                     mouseMap.put(key, value);
                 } catch (IllegalAccessException e) {
                     logger.error("Unable to access value for: " + clicks[i]);
+                    logger.error(e);
                 } catch (NoSuchFieldException e) {
                     logger.error("Field does not exist for: " + clicks[i]);
+                    logger.error(e);
                 }
             }
         }
@@ -226,6 +243,7 @@ public class SaveReader {
             FileOutputStream fileOutputStream = new FileOutputStream(jFileSystem.getBasePath() + "/currentFile.piano.txt");
             properties.store(fileOutputStream, null);
         } catch (IOException e) {
+            logger.error(e);
             logger.error("Unable to get JFSFile's Location");
         }
     }
