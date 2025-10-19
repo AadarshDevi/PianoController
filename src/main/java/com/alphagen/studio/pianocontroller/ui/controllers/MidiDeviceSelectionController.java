@@ -1,6 +1,7 @@
 package com.alphagen.studio.pianocontroller.ui.controllers;
 
 import com.alphagen.studio.pianocontroller.Main;
+import com.alphagen.studio.pianocontroller.midi.MidiDeviceChecker;
 import com.alphagen.studio.pianocontroller.ui.controllers.modules.MidiDeviceModuleController;
 import com.alphagen.studio.pianocontroller.ui.managers.ControllerManager;
 import javafx.collections.FXCollections;
@@ -40,6 +41,12 @@ public class MidiDeviceSelectionController {
         ObservableList<MidiDevice.Info> observableList = FXCollections.observableArrayList(MidiSystem.getMidiDeviceInfo());
 
         for (MidiDevice.Info mdi : observableList) {
+            try {
+                if (!MidiDeviceChecker.checkDevice(MidiSystem.getMidiDevice(mdi))) continue;
+            } catch (MidiUnavailableException e) {
+                throw new RuntimeException(e);
+            }
+
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("fxml/MidiDeviceModule_V1.fxml"));
             BorderPane module = null;
             try {
