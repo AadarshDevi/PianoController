@@ -60,8 +60,8 @@ public class SaveReader {
         readNumPad();
         readSpecials();
         readMouseClicks();
-        readMouseScrolls();
-        readMouseMovement();
+//        readMouseScrolls();
+//        readMouseMovement();
     }
 
     public void readLetters() {
@@ -78,7 +78,7 @@ public class SaveReader {
                     int value = Integer.parseInt(valueString);
                     int key = KeyEvent.class.getField("VK_" + letter).getInt(null); // get the VK_{letter} of letter
                     logger.info("Letter: " + letter + ", Key: " + key + ", Value: " + value);
-                    keyMap.put(key, value);
+                    keyMap.put(value, key);
                 } catch (IllegalAccessException e) {
                     logger.error(e);
                     logger.error("Unable to access value for: " + letter);
@@ -107,7 +107,7 @@ public class SaveReader {
                     int value = Integer.parseInt(valueString);
                     int key = KeyEvent.class.getField("VK_" + num).getInt(null); // get the VK_{number} of number
                     logger.info("Num: " + num + ", Key: " + key + ", Value: " + value);
-                    keyMap.put(key, value);
+                    keyMap.put(value, key);
                 } catch (IllegalAccessException e) {
                     logger.error(e);
                     logger.error("Unable to access value for: " + num);
@@ -131,7 +131,7 @@ public class SaveReader {
                     int value = Integer.parseInt(valueString);
                     int key = KeyEvent.class.getField("VK_NUMPAD" + numPadNum).getInt(null); // get the VK_{number} of number
                     logger.info("NumPadNum: " + numPadNum + ", Key: " + key + ", Value: " + value);
-                    keyMap.put(key, value);
+                    keyMap.put(value, key);
                 } catch (IllegalAccessException e) {
                     logger.error(e);
                     logger.error("Unable to access value for: " + numPadNum);
@@ -162,7 +162,7 @@ public class SaveReader {
                     int value = Integer.parseInt(valueString);
                     int key = KeyEvent.class.getField("VK_" + keyVal).getInt(null); // get the VK_{number} of number
                     logger.info("Modifier: " + keyVal + ", Key: " + key + ", Value: " + value);
-                    keyMap.put(key, value);
+                    keyMap.put(value, key);
                 }
             } catch (IllegalAccessException e) {
                 logger.error("Unable to access value for: " + keyVal);
