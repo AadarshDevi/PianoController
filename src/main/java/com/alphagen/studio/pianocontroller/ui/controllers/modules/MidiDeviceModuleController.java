@@ -1,7 +1,7 @@
 package com.alphagen.studio.pianocontroller.ui.controllers.modules;
 
-import com.alphagen.studio.pianocontroller.midi.MidiDeviceChecker;
 import com.alphagen.studio.pianocontroller.ui.managers.ControllerManager;
+import com.alphagen.studio.pianocontroller.util.MidiDeviceUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -21,13 +21,67 @@ public class MidiDeviceModuleController {
     private Label midiDeviceNameLabel;
     @FXML
     private Button midiDeviceConnector;
+
+//    @FXML private SVGPath connectMidi;
+//    @FXML private SVGPath unconnectableMidi;
+//    @FXML private SVGPath connectableMidi;
+
+
+    //    private ButtonState buttonState;
     private MidiDevice midiDevice;
 
+    @FXML public void initialize() {
+//        connectMidi.setVisible(true);
+//        connectableMidi.setVisible(false);
+//        unconnectableMidi.setVisible(false);
+
+//        buttonState = ButtonState.CONNECT;
+//        midiDeviceConnector.setBackground(new Background(new BackgroundFill(Theme.MIDI_CONNECTOR_HOVER, null, null)));
+//        midiDeviceConnector.setOnMouseEntered(event -> {
+//            if (buttonState == ButtonState.CONNECT) {
+//                midiDeviceConnector.setBackground(new Background(new BackgroundFill(Theme.MIDI_CONNECTOR_HOVER, null, null)));
+//                connectMidi.setVisible(false);
+//                connectableMidi.setVisible(true);
+//                unconnectableMidi.setVisible(false);
+//            } else if (buttonState == ButtonState.UNCONNECTABLE) {
+//                midiDeviceConnector.setBackground(new Background(new BackgroundFill(Theme.MIDI_CONNECTOR_ERROR, null, null)));
+//                buttonState = ButtonState.UNCONNECTABLE;
+//                connectMidi.setVisible(false);
+//                connectableMidi.setVisible(false);
+//                unconnectableMidi.setVisible(true);
+//            }
+//        });
+//        midiDeviceConnector.setOnMouseExited(event -> {
+//            if (buttonState == ButtonState.CONNECT) {
+//                midiDeviceConnector.setBackground(new Background(new BackgroundFill(Theme.MIDI_CONNECTOR_DEFAULT, null, null)));
+//                connectMidi.setVisible(true);
+//                connectableMidi.setVisible(false);
+//                unconnectableMidi.setVisible(false);
+//            } else if (buttonState == ButtonState.UNCONNECTABLE) {
+//                midiDeviceConnector.setBackground(new Background(new BackgroundFill(Theme.MIDI_CONNECTOR_ERROR, null, null)));
+//                buttonState = ButtonState.UNCONNECTABLE;
+//                connectMidi.setVisible(false);
+//                connectableMidi.setVisible(false);
+//                unconnectableMidi.setVisible(true);
+//            }
+//        });
+
+    }
+
     @FXML
-    public void connectMidiDevice() throws MidiUnavailableException {
-        boolean connectable = MidiDeviceChecker.checkDevice(midiDevice);
-        if (connectable) midiDeviceConnector.setText("Connectable");
-        else midiDeviceConnector.setText("Connect");
+    public void connectMidiDevice() {
+        boolean connectable = MidiDeviceUtil.checkDevice(midiDevice);
+//        if (connectable) {
+//            connectMidi.setVisible(false);
+//            connectableMidi.setVisible(true);
+//            unconnectableMidi.setVisible(false);
+//            buttonState = ButtonState.CONNECTABLE;
+//        } else {
+//            connectMidi.setVisible(false);
+//            connectableMidi.setVisible(false);
+//            unconnectableMidi.setVisible(true);
+//            buttonState = ButtonState.UNCONNECTABLE;
+//        }
         connected_icon.setVisible(connectable);
     }
 
@@ -45,7 +99,13 @@ public class MidiDeviceModuleController {
     public void reset() {
         connected_icon.setVisible(false);
         midiDeviceConnector.setText("Connect");
-//        logger.info("MidiDevice Module Reset");
+//        buttonState = ButtonState.CONNECT;
+//
+//        connectMidi.setVisible(true);
+//        connectableMidi.setVisible(false);
+//        unconnectableMidi.setVisible(false);
+
+        logger.info("MidiDevice Module Reset");
     }
 
     public void active() {
@@ -55,4 +115,10 @@ public class MidiDeviceModuleController {
         logger.info("MidiDevice Connectable: {}", midiDevice.getDeviceInfo().getName());
         ControllerManager.getMidiDeviceSelectionController().setCurrentMidiDeviceName(midiDevice.getDeviceInfo().getName());
     }
+
+//    enum ButtonState {
+//        CONNECT, CONNECTABLE, UNCONNECTABLE
+//    }
+
+
 }
