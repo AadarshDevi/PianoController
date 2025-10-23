@@ -3,17 +3,16 @@ package com.alphagen.studio.pianocontroller;
 import com.alphagen.studio.pianocontroller.ui.controllers.MainFrameController;
 import com.alphagen.studio.pianocontroller.ui.managers.ControllerManager;
 import com.alphagen.studio.pianocontroller.ui.managers.SceneManager;
+import com.alphagen.studio.pianocontroller.util.WindowUtil;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,22 +28,6 @@ public class Main extends Application {
     private static final Logger logger = LogManager.getLogger(Main.class);
 
     private static final boolean testCSS = true;
-
-    /**
-     * This is the main method to stop and quit the app entirely. Stops all
-     * threads, closes all midi devices and gracefully stops the app
-     * and quit.
-     */
-    public static void quit() {
-        if (MainFrameController.getReceiverThread() != null) {
-            ControllerManager.getMainFrameController().getMidiDevice().close();
-            MainFrameController.getReceiverThread().interrupt();
-        }
-        logger.info("Closing Piano Controller...");
-        LogManager.shutdown();
-        System.out.println("Quit Piano Controller.");
-        Platform.exit();
-    }
 
     /**
      * This is the method that will set up the main ui and its controller along
@@ -76,19 +59,19 @@ public class Main extends Application {
         else scene.getStylesheets().add(Main.class.getResource("css/app_v1_stylesheet.css").toExternalForm());
         scene.setOnKeyPressed(keyEvent -> {
             if (new KeyCodeCombination(KeyCode.Q, KeyCombination.CONTROL_DOWN).match(keyEvent)) {
-                quit();
+                WindowUtil.quit();
             }
         });
 
         // setting up stage for use
         stage.setScene(scene);
         stage.setTitle("Piano Controller Dev Build 2.1.0.1.0");
-        stage.initStyle(StageStyle.UNDECORATED);
-        stage.setResizable(false);
-        stage.getIcons().add(new Image(Main.class.getResourceAsStream("images/app_logo_2.png")));
+        WindowUtil.setCustomWindow(stage, true, mainFrameController.getRoot());
+
         stage.show();
-        stage.setOnCloseRequest(event -> {
-            quit();
-        });
+    }
+
+    public Pane getRoot() {
+        return null;
     }
 }

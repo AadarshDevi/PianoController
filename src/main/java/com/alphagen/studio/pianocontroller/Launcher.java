@@ -1,7 +1,9 @@
 package com.alphagen.studio.pianocontroller;
 
 import com.alphagen.studio.pianocontroller.filepath.Settings;
+import com.alphagen.studio.pianocontroller.util.WindowUtil;
 import javafx.application.Application;
+import javafx.scene.layout.Pane;
 import jfilesystem.JFileSystem;
 import jfilesystem.file.exception.JFSFileNotCreatedException;
 import org.apache.logging.log4j.LogManager;
@@ -10,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 public class Launcher {
 
     private static final Logger logger = LogManager.getLogger(Launcher.class);
+    private static final Logger myLogger = LogManager.getLogger(Launcher.class);
     private static JFileSystem jFileSystem;
 
     public static void main(String[] args) {
@@ -21,7 +24,7 @@ public class Launcher {
             jFileSystem = new JFileSystem(basePath);
         } catch (JFSFileNotCreatedException e) {
             logger.error("Unable to create Base Folder");
-            Main.quit();
+            WindowUtil.quit();
         }
 
         logger.info("Launching Settings...");
@@ -33,5 +36,9 @@ public class Launcher {
 
     public static JFileSystem getjFileSystem() {
         return jFileSystem;
+    }
+
+    public Pane getRoot() {
+        return null;
     }
 }
