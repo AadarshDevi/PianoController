@@ -1,4 +1,4 @@
-package com.alphagen.studio.pianocontroller.midi;
+package com.alphagen.studio.pianocontroller.util;
 
 import com.alphagen.studio.pianocontroller.ui.managers.ControllerManager;
 import org.apache.logging.log4j.LogManager;
@@ -7,8 +7,13 @@ import org.apache.logging.log4j.Logger;
 import javax.sound.midi.MidiDevice;
 import javax.sound.midi.MidiUnavailableException;
 
-public class MidiDeviceChecker {
-    private static final Logger logger = LogManager.getLogger(MidiDeviceChecker.class);
+public class MidiDeviceUtil {
+    private static final Logger logger = LogManager.getLogger(MidiDeviceUtil.class);
+
+    /**
+     * This will enable for loops into stream instead of for loops
+     */
+    public static final boolean enableStreams = false;
 
     public static boolean checkDevice(MidiDevice midiDevice) {
         if (midiDevice == null) {
