@@ -145,7 +145,7 @@ public class SaveReader {
 
     public void readSpecials() {
 
-        String[] specials = new String[]{"SPACE", "CONTROL", "SHIFT", "TAB", "ALT"};
+        String[] specials = new String[]{"SPACE", "CONTROL", "SHIFT", "TAB", "ALT", "ESCAPE"};
 
         for (String keyVal : specials) {
 

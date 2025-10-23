@@ -49,7 +49,7 @@ public class SaveWriter {
 
 
             // Special Keys
-            String[] specials = new String[]{"SPACE", "CONTROL", "SHIFT", "TAB", "ALT"};
+            String[] specials = new String[]{"SPACE", "CONTROL", "SHIFT", "TAB", "ALT", "ESCAPE"};
             for (String key : specials) {
                 printWriter.println("SPECIAL_" + key + "=");
             }
