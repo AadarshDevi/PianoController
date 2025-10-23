@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.SVGPath?>
+
+<BorderPane fx:id="basePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="490.0" styleClass="midi-module" stylesheets="@../css/app_stylesheet.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.alphagen.studio.pianocontroller.ui.controllers.modules.MidiDeviceModuleController">
+   <center>
+      <Label fx:id="midiDeviceNameLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="422.0" styleClass="app-header-text" text="Midi Device Name" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets bottom="1.0" left="8.0" />
+         </padding>
+      </Label>
+   </center>
+   <right>
+      <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="36.0" prefWidth="64.0" spacing="4.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="1.0" right="3.0" />
+         </BorderPane.margin>
+         <children>
+            <Button fx:id="midiDeviceConnector" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#connectMidiDevice" prefHeight="30.0" prefWidth="30.0" styleClass="connect-button" HBox.hgrow="NEVER">
+               <graphic>
+                  <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="30.0" stylesheets="@../css/app_stylesheet.css">
+                     <children>
+                        <SVGPath fx:id="connectMidi" content="M 5.9,24C 4.3,24 2.8,23.4 1.7,22.3 0.6,21.2 0,19.7 0,18.1 0,16.5 0.6,15 1.7,13.9l 3.8,-3.8 2,2 2.8,-2.8 1.4,1.4 -2.8,2.8 1.6,1.6 2.8,-2.8 1.4,1.4 -2.8,2.8 2,2 -3.7,3.8C 9,23.3 7.5,24 5.9,24ZM 5.5,12.9 3.2,15.2C 2.4,16 2,17 2,18c 0,1 0.4,2 1.2,2.8 1.5,1.5 4.1,1.5 5.6,0l 2.3,-2.4zm 13,1 -8.4,-8.4 3.7,-3.8C 14.9,0.6 16.5,0 18,0 19.5,0 21,0.6 22.2,1.7 23.4,2.8 24,4.3 24,5.9 24,7.5 23.4,9 22.3,10.1ZM 13,5.5 18.5,11 20.8,8.7C 21.6,7.9 22,7 22,5.9c 0,-1 -0.4,-2 -1.2,-2.8 -1.5,-1.5 -4,-1.5 -5.6,0z" fill="WHITE" visible="false" />
+                        <SVGPath fx:id="connectableMidi" content="M 18.023086,4.828125C 16.936077,4.0305405 15.668401,3.6 14.4,3.6c -1.5,0 -3.1,0.5999805 -4.2,1.6999805l -3.7000195,3.800039 -2.4,2.4000005c -1.1,1.1 -1.6999805,2.6 -1.6999805,4.2 0,1.360717 0.4354309,2.648093 1.2418359,3.679628 1.0714453,1.050352 0,0 1.0714453,1.050352 1.0154275,0.760617 2.2666822,1.17 3.5866993,1.17 1.6,0 3.1000195,-0.69998 4.3000195,-1.69998l 3.70002,-3.80004 2.4,-2.4c 1.1,-1.1 1.69998,-2.6 1.69998,-4.1999995 0,-1.3475974 -0.427374,-2.6232094 -1.278633,-3.6496875zM 14.4375,5.5750195c 1.0125,0 2.01252,0.375 2.76252,1.125 0.8,0.8 1.2,1.799961 1.2,2.799961 0,1.0999995 -0.4,2.0000195 -1.2,2.8000195l -2.30004,2.29998 -5.4999605,-5.4999605 2.1999605,-2.4c 0.8,-0.75 1.82502,-1.125 2.83752,-1.125zM 7.8999609,10.5h 5.86e-5l 5.5510545,5.551113 -2.251054,2.348907c -1.500001,1.5 -4.1000395,1.5 -5.6000395,0 -0.8,-0.8 -1.2,-1.80002 -1.2,-2.80002 0,-1 0.4,-2.00002 1.2,-2.80002z" fill="WHITE" visible="false" />
+                        <SVGPath fx:id="unconnectableMidi" content="m 195.2,195.2a 64,64 0 0 1 90.496,0L 512,421.504 738.304,195.2A 64,64 0 0 1 828.8,285.696L 602.496,512 828.8,738.304A 64,64 0 0 1 738.304,828.8L 512,602.496 285.696,828.8A 64,64 0 0 1 195.2,738.304L 421.504,512 195.2,285.696a 64,64 0 0 1 0,-90.496z" fill="WHITE" scaleX="0.02" scaleY="0.02" />
+                     </children>
+                  </StackPane>
+               </graphic>
+            </Button>
+            <Button fx:id="resetDataButton" layoutX="10.0" layoutY="13.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" styleClass="reset-button">
+               <graphic>
+                  <SVGPath content="M 22.719 12A 10.719 10.719 0 0 1 1.28 12h .838a 9.916 9.916 0 1 0 1.373-5H 8v 1H 2V 2h 1v 4.2A 10.71 10.71 0 0 1 22.719 12z" fill="WHITE" scaleX="0.6" scaleY="0.6" stroke="WHITE" strokeWidth="2.0" />
+               </graphic>
+            </Button>
+         </children>
+      </HBox>
+   </right>
+</BorderPane>

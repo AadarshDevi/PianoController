@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="basePane" prefHeight="241.0" prefWidth="504.0" stylesheets="@../css/MidiSelectionWindow.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.alphagen.studio.pianocontroller.ui.controllers.MainFrameController">
+   <top>
+      <HBox fx:id="root" alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="18.0" prefWidth="200.0" spacing="3.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0" text="Piano Controller" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font name="Cascadia Mono Regular" size="12.0" />
+               </font>
+               <padding>
+                  <Insets left="4.0" />
+               </padding>
+               <graphic>
+                  <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/app_logo_2.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
+            <Button fx:id="minimizeAppButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#minimizeApp" prefHeight="17.0" prefWidth="40.0">
+               <graphic>
+                  <SVGPath content="M 28,0H 4C 1.791,0 0,1.79 0,4 0,6.21 1.791,8 4,8H 28C 30.209,8 32,6.21 32,4 32,1.79 30.209,0 28,0" fill="WHITE" scaleX="0.3" scaleY="0.3" stroke="BLACK" strokeWidth="0.0" />
+               </graphic>
+               <padding>
+                  <Insets top="1.0" />
+               </padding>
+            </Button>
+            <Button fx:id="quitAppButton" layoutX="493.0" layoutY="13.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#quitApp" prefHeight="16.0" prefWidth="40.0">
+               <graphic>
+                  <SVGPath content="m 195.2,195.2a 64,64 0 0 1 90.496,0L 512,421.504 738.304,195.2A 64,64 0 0 1 828.8,285.696L 602.496,512 828.8,738.304A 64,64 0 0 1 738.304,828.8L 512,602.496 285.696,828.8A 64,64 0 0 1 195.2,738.304L 421.504,512 195.2,285.696a 64,64 0 0 1 0,-90.496z" fill="WHITE" scaleX="0.012" scaleY="0.012" />
+               </graphic>
+               <padding>
+                  <Insets top="1.0" />
+               </padding>
+            </Button>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="1.0" right="3.0" />
+         </BorderPane.margin>
+      </HBox>
+   </top>
+   <bottom>
+      <HBox fx:id="processInterface" alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="47.0" prefWidth="500.0" spacing="5.0">
+         <children>
+            <HBox fx:id="testSuite" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Button fx:id="getKeyValueButton" alignment="CENTER" maxHeight="-Infinity" maxWidth="60.0" minHeight="-Infinity" minWidth="30.0" mnemonicParsing="false" onAction="#getKeyValue" prefHeight="30.0" prefWidth="30.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                           <graphic>
+                              <SVGPath content="M 15.7955 15.8111L 21 21M 18 10.5C 18 14.6421 14.6421 18 10.5 18C 6.35786 18 3 14.6421 3 10.5C 3 6.35786 6.35786 3 10.5 3C 14.6421 3 18 6.35786 18 10.5Z" fill="#ffffff00" scaleX="0.75" scaleY="0.75" stroke="WHITE" strokeWidth="4.0" />
+                           </graphic>
+                        </Button>
+                        <HBox fx:id="keyFinderContainer" alignment="CENTER_LEFT" maxHeight="-Infinity" prefHeight="35.0" prefWidth="100.0" spacing="2.0">
+                           <children>
+                              <TextField fx:id="pianoKeyNumTextField" alignment="CENTER" prefHeight="30.0" prefWidth="45.0" promptText="PK">
+                                 <font>
+                                    <Font name="Cascadia Mono Regular" size="12.0" />
+                                 </font>
+                              </TextField>
+                              <Label fx:id="keyboardKeyLabel" alignment="CENTER" prefHeight="30.0" prefWidth="45.0" text="KK">
+                                 <font>
+                                    <Font name="Cascadia Mono Regular" size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <HBox.margin>
+                              <Insets left="9.0" />
+                           </HBox.margin>
+                        </HBox>
+                     </children>
+                  </HBox>
+                  <Button fx:id="testButton" alignment="CENTER" maxHeight="-Infinity" maxWidth="60.0" minHeight="-Infinity" minWidth="30.0" mnemonicParsing="false" onAction="#testAction" prefHeight="30.0" prefWidth="30.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <graphic>
+                        <SVGPath content="M 424.7125 0C 410.7855 -0.017 399.50075 11.233 399.48375 25.16C 399.46775 39.07 410.73375 50.353 424.64375 50.37C 438.55375 50.387 449.8465 39.12025 449.8625 25.20125C 449.8715 11.29225 438.6225 0.009 424.7125 0zM 461.24125 65.30375C 451.46025 65.27775 443.505 73.1925 443.505 82.9725C 443.487 92.7695 451.4185 100.6825 461.2075 100.7075C 470.9715 100.7075 478.92625 92.80175 478.92625 83.01375C 478.94225 73.24175 471.02025 65.30375 461.24125 65.30375zM 414.2975 105.2C 406.1055 105.192 399.46775 111.82225 399.45875 120.00625C 399.45875 128.18925 406.089 134.8275 414.265 134.8275C 422.457 134.8455 429.0875 128.2085 429.0875 120.0325C 429.0955 111.8395 422.4725 105.209 414.2975 105.2zM 310.7275 112.22375C 302.8875 112.22375 295.047 115.20975 289.08 121.18125C 281.36 128.90125 278.641 139.7455 280.905 149.6775L 278.945 151.645L 56.7525 373.83875C 25.1825 405.40075 25.1825 456.7605 56.7525 488.3225C 88.3065 519.8935 139.6735 519.8935 171.2275 488.3225L 393.42875 266.12875L 395.38875 264.16875C 405.32075 266.43275 416.17375 263.71275 423.89375 255.99375C 435.82775 244.05075 435.83675 224.634 423.89375 212.7L 332.37375 121.18125C 326.40675 115.20975 318.5675 112.22375 310.7275 112.22375zM 310.72625 126.75375C 314.84138 126.75375 318.95625 128.3225 322.09375 131.46L 413.605 222.97C 419.889 229.254 419.88925 239.432 413.60625 245.715C 409.27325 250.048 403.0825 251.38225 397.5925 249.73625L 393.4275 245.5725L 299.5025 151.64625L 295.3375 147.4825C 293.6815 141.9925 295.0255 135.793 299.3575 131.46C 302.4955 128.3225 306.61112 126.75375 310.72625 126.75375zM 290.70125 160.4375C 291.08925 160.8595 291.4785 161.26475 291.8825 161.66875L 383.4025 253.18875C 383.7995 253.59375 384.2125 253.98325 384.6275 254.37125L 381.8325 257.15875L 324.3575 314.64125L 160.9575 478.0425C 135.0115 503.9795 92.9675 503.9795 67.0225 478.0425C 41.0945 452.1055 41.0945 410.05425 67.0225 384.11625L 229.62125 221.5175L 287.91375 163.24125L 290.70125 160.4375zM 153.18625 320.3925L 78.2375 395.3325C 58.5255 415.0455 58.5255 447.1155 78.2375 466.8275C 97.9505 486.5405 130.02825 486.5405 149.74125 466.8275L 296.175 320.3925L 153.18625 320.3925z" fill="WHITE" scaleX="0.035" scaleY="0.035" stroke="WHITE" strokeWidth="2.0" />
+                     </graphic>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets left="9.0" />
+               </padding>
+            </HBox>
+            <Button fx:id="resetDataButton" alignment="CENTER" layoutX="400.0" layoutY="19.0" maxHeight="-Infinity" maxWidth="60.0" minHeight="-Infinity" minWidth="30.0" mnemonicParsing="false" onAction="#resetData" prefHeight="30.0" prefWidth="30.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <graphic>
+                  <SVGPath content="M 22.719 12A 10.719 10.719 0 0 1 1.28 12h .838a 9.916 9.916 0 1 0 1.373-5H 8v 1H 2V 2h 1v 4.2A 10.71 10.71 0 0 1 22.719 12z" fill="WHITE" scaleX="0.6" scaleY="0.6" stroke="WHITE" strokeWidth="2.0" />
+               </graphic>
+               <padding>
+                  <Insets top="1.0" />
+               </padding>
+            </Button>
+            <Button fx:id="openSettingsButton" alignment="CENTER" maxHeight="-Infinity" maxWidth="60.0" minHeight="-Infinity" minWidth="30.0" mnemonicParsing="false" onAction="#openSettings" prefHeight="30.0" prefWidth="30.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <graphic>
+                  <SVGPath content="m 497.569,215.166 -55.345,-13.064c -4.032,-13.946 -9.495,-27.27 -16.376,-39.732l 29.85,-48.303c 4.57,-7.397 3.452,-16.946 -2.688,-23.086l -31.99,-31.99c -6.129,-6.129 -15.678,-7.248 -23.076,-2.678L 349.652,86.164C 337.19,79.282 323.867,73.82 309.92,69.787L 296.856,14.419C 294.856,5.978 287.306,0 278.63,0h -45.237c -8.678,0 -16.227,5.978 -18.227,14.419l -13.064,55.368c -13.946,4.032 -27.27,9.484 -39.732,16.377L 114.067,56.292C 106.68,51.743 97.121,52.851 90.981,58.991L 58.99,90.97c -6.13,6.14 -7.248,15.709 -2.689,23.087l 29.862,48.313c -6.882,12.462 -12.344,25.786 -16.367,39.721L 14.418,215.156C 5.978,217.165 0,224.704 0,233.392v 45.226c 0,8.678 5.978,16.237 14.419,18.226l 55.378,13.065c 4.032,13.946 9.485,27.259 16.367,39.71l -29.872,48.324c -4.549,7.398 -3.441,16.957 2.699,23.098L 90.97,453.02c 6.14,6.14 15.709,7.257 23.087,2.688l 48.323,-29.872c 12.463,6.882 25.786,12.344 39.722,16.366l 13.064,55.366c 2,8.463 9.549,14.431 18.227,14.431h 45.237c 8.677,0 16.226,-5.968 18.226,-14.431l 13.064,-55.366c 13.937,-4.021 27.259,-9.484 39.712,-16.366l 48.312,29.861c 7.398,4.57 16.947,3.452 23.087,-2.688l 31.989,-31.99c 6.13,-6.129 7.248,-15.688 2.678,-23.087L 425.837,349.63c 6.893,-12.452 12.345,-25.774 16.377,-39.721L 497.58,296.844C 506.043,294.843 512,287.305 512,278.618V 233.38c 0,-8.666 -5.968,-16.215 -14.431,-18.214zM 256.00395,322.45534c -36.68383,0 -66.44623,-29.76382 -66.44623,-66.46034 0,-36.69652 29.76381,-66.46034 66.44623,-66.46034 36.69652,0 66.46033,29.76382 66.46033,66.46034 0,36.69652 -29.76381,66.46034 -66.46033,66.46034z" fill="WHITE" scaleX="0.03" scaleY="0.03" />
+               </graphic>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="runAppButton" alignment="CENTER" layoutX="400.0" layoutY="19.0" maxHeight="-Infinity" maxWidth="60.0" minHeight="-Infinity" minWidth="30.0" mnemonicParsing="false" onAction="#runApplication" prefHeight="30.0" prefWidth="30.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <graphic>
+                  <SVGPath content="m 151.43833,139.3973 -110.013454,0 55.006727,-95.274444z" fill="WHITE" rotate="90.0" scaleX="0.11" scaleY="0.11" />
+               </graphic>
+            </Button>
+            <Button fx:id="stopAppButton" alignment="CENTER" layoutX="400.0" layoutY="19.0" maxHeight="-Infinity" maxWidth="60.0" minHeight="-Infinity" minWidth="30.0" mnemonicParsing="false" onAction="#stopApplication" prefHeight="30.0" prefWidth="30.0" text="⏹" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <padding>
+                  <Insets bottom="-1.0" />
+               </padding>
+            </Button>
+         </children>
+         <padding>
+            <Insets right="9.0" />
+         </padding>
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" />
+         </BorderPane.margin>
+      </HBox>
+   </bottom>
+</BorderPane>

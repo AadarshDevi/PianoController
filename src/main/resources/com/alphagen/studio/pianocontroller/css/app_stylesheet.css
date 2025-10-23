@@ -1,0 +1,59 @@
+.root {
+  -fx-background-color-1: #1e1f22;
+  -fx-background-color-2: #2c2c3c;
+
+  -fx-red: #bf3434;
+  -fx-coral: #ff6f61;
+  -fx-teal: #1abc9c;
+  -fx-blue: #2679ff;
+  -fx-orange: #ff7e1c;
+  -fx-green: #42bf34;
+  -fx-purple: #9b58b6;
+  -fx-violet: #6a5acd;
+  -fx-yellow-orange: #f39c12;
+  -fx-grey: #6c757d;
+
+  -fx-font-size-16: 16px;
+  -fx-font-size-15: 15px;
+  -fx-font-size-14: 14px;
+  -fx-font-size-12: 12px;
+}
+
+.label {
+  -fx-font-family: "Cascadia Mono Regular";
+  -fx-text-fill: #ffffff;
+}
+.button {
+  -fx-background-radius: 5px;
+}
+
+.app-header-text {
+  -fx-font-size: 16px;
+}
+
+.app-titlebar-text {
+}
+
+/* Midi Device Module */
+.midi-module {
+  -fx-background-color: -fx-background-color-1;
+}
+
+.midi-module:hover {
+  -fx-background-color: derive(-fx-background-color-1, 50%);
+}
+
+.reset-button {
+  -fx-background-color: -fx-orange;
+}
+.reset-button:hover {
+  -fx-background-color: derive(-fx-background-color-1, 10%);
+}
+
+.connect-button {
+  -fx-background-color: -fx-yellow-orange;
+}
+
+.midi-module-name {
+  -fx-background-color: -fx-background-color-1;
+}
