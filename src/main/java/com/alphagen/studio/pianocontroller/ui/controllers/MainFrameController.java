@@ -1,16 +1,21 @@
 package com.alphagen.studio.pianocontroller.ui.controllers;
 
 import com.alphagen.studio.pianocontroller.Main;
-import com.alphagen.studio.pianocontroller.midi.MidiDeviceChecker;
 import com.alphagen.studio.pianocontroller.midi.MidiDeviceReceiver;
 import com.alphagen.studio.pianocontroller.save.SaveReader;
 import com.alphagen.studio.pianocontroller.save.SaveWriter;
+import com.alphagen.studio.pianocontroller.ui.controllers.modules.MidiDeviceModuleController;
 import com.alphagen.studio.pianocontroller.ui.managers.ControllerManager;
+import com.alphagen.studio.pianocontroller.util.MidiDeviceUtil;
+import com.alphagen.studio.pianocontroller.util.WindowUtil;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -29,6 +34,7 @@ import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Transmitter;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.FileAlreadyExistsException;
 import java.util.HashMap;
 
@@ -49,33 +55,27 @@ public class MainFrameController {
      * @see MidiDeviceReceiver
      */
     private static Thread receiverThread = null;
-
     /**
      * This is used to check if the Midi Device Selection Window is open
      */
     boolean selectMidiUIOpen;
-
     /**
      * This is used to know if the app is reading midi data
      */
     boolean isRunning = false;
-
     /**
      * this is a file that will contain the Config File used to map piano keys
      * to keyboard keys
      */
     private File configFile;
-
     /**
      * This is the midi device that will connect and send data to the app.
      */
     private MidiDevice midiDevice;
-
     /**
      * This is the Config File Reader of "configFile"
      */
     private SaveReader saveReader;
-
     // Root Pane
     @FXML private HBox root;
     @FXML private StackPane appLogoButton;
@@ -127,11 +127,14 @@ public class MainFrameController {
         ContextMenu contextMenu = new ContextMenu();
         MenuItem menuItemAppLogoQuit = new MenuItem("Quit");
         menuItemAppLogoQuit.setOnAction(event -> quitApp());
-        contextMenu.getItems().add(menuItemAppLogoQuit);
+
+        MenuItem menuItemAppLogoMinimize = new MenuItem("Minimize");
+        menuItemAppLogoMinimize.setOnAction(event -> minimizeApp());
+        contextMenu.getItems().addAll(menuItemAppLogoMinimize, new SeparatorMenuItem(), menuItemAppLogoQuit);
 
         appLogoButton.setOnContextMenuRequested(event -> {
-            double screenX = appLogoButton.localToScreen(0, 0).getX() + 1;
-            double screenY = appLogoButton.localToScreen(0, 0).getY() + 18;
+            double screenX = appLogoButton.localToScreen(0, 0).getX() + 4;
+            double screenY = appLogoButton.localToScreen(0, 0).getY() + 22;
             contextMenu.show(appLogoButton, screenX, screenY);
         });
 
@@ -156,18 +159,6 @@ public class MainFrameController {
         isRunning();
 
         // This code makes the undecorated app draggable and being able to move freely
-        {
-            final Delta dragDelta = new Delta(); // contains x and y
-            root.setOnMousePressed(event -> { // moving starts when mouse is pressed on the root
-                dragDelta.x = event.getSceneX(); // gets initial position x
-                dragDelta.y = event.getSceneY(); // gets initial position y
-            });
-            root.setOnMouseDragged(event -> { // drag scene
-                Stage stage = (Stage) root.getScene().getWindow();
-                stage.setX(event.getScreenX() - dragDelta.x); // change global x with delta x
-                stage.setY(event.getScreenY() - dragDelta.y); // change global y with delta y
-            });
-        }
     }
 
     /**
@@ -180,6 +171,12 @@ public class MainFrameController {
         fileChooser.setTitle("Choose Piano Config File");
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Piano Config", "*.piano.txt"));
         File config = fileChooser.showOpenDialog(null);
+
+        setValidConfigLabel(config);
+        validConfigFile();
+    }
+
+    private void setValidConfigLabel(File config) {
 
         if (config != null) {
             this.configFile = config;
@@ -200,7 +197,6 @@ public class MainFrameController {
                 logger.error("Unable to get File");
             }
         }
-        validConfigFile();
     }
 
     /**
@@ -210,6 +206,7 @@ public class MainFrameController {
      */
     @FXML public void saveConfigFile() {
         System.out.println("save");
+        // todo
     }
 
     /**
@@ -225,7 +222,7 @@ public class MainFrameController {
 
         // Set extension filters, e.g., TXT files only
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Piano Config", "*.piano.txt"));
-        File file = fileChooser.showSaveDialog(new Stage());
+        File file = fileChooser.showSaveDialog(null);
         if (file != null) {
             JFSFile jfsFile = new JFSFile(file.getAbsolutePath());
             try {
@@ -258,15 +255,78 @@ public class MainFrameController {
             selectMidiUIOpen = true;
             logger.info("Midi Device Selection Window Open");
 
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("fxml/SelectMidiDevice_V1.fxml"));
-            VBox midiSelection = fxmlLoader.load(); // throws IOException
-            MidiDeviceSelectionController midiDeviceSelectionController = fxmlLoader.getController();
+            FXMLLoader selectMidiDeviceFXMLLoader = new FXMLLoader(Main.class.getResource("fxml/SelectMidiDevice_V1.fxml"));
+            VBox midiSelection = selectMidiDeviceFXMLLoader.load(); // throws IOException
+//            FXMLLoader selectMidiDeviceFXMLLoader = new FXMLLoader(Main.class.getResource("fxml/SelectMidiDevice_V3.fxml"));
+//            BorderPane midiSelection = selectMidiDeviceFXMLLoader.load(); // throws IOException
+            MidiDeviceSelectionController midiDeviceSelectionController = selectMidiDeviceFXMLLoader.getController();
             ControllerManager.setMidiDeviceSelectionController(midiDeviceSelectionController);
 
-            if (midiDevice == null) {
-                midiDeviceSelectionController.populateList();
+            logger.info("Placing Midi Device");
+            ObservableList<MidiDevice.Info> observableList = FXCollections.observableArrayList(MidiSystem.getMidiDeviceInfo());
+
+            if (MidiDeviceUtil.enableStreams) {
+                FXCollections
+                        .observableArrayList(MidiSystem.getMidiDeviceInfo())
+                        .stream()
+                        .filter(mdi -> {
+                            try {
+                                if (!MidiDeviceUtil.checkDevice(MidiSystem.getMidiDevice(mdi))) return false;
+                            } catch (MidiUnavailableException e) {
+                                throw new RuntimeException(e);
+                            }
+                            return true;
+                        }).forEach(mdi -> {
+                            FXMLLoader mdm = new FXMLLoader(Main.class.getResource("fxml/MidiDeviceModule_V1.fxml"));
+                        });
             } else {
-                midiDeviceSelectionController.populateList(midiDevice);
+                for (MidiDevice.Info mdi : observableList) {
+                    try {
+                        if (!MidiDeviceUtil.checkDevice(MidiSystem.getMidiDevice(mdi))) continue;
+                    } catch (MidiUnavailableException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    FXMLLoader midiDeviceModule = new FXMLLoader(Main.class.getResource("fxml/MidiDeviceModule_V1.fxml"));
+//                FXMLLoader midiDeviceModule = new FXMLLoader(Main.class.getResource("fxml/MidiDeviceModule_V2.fxml"));
+                    BorderPane module = null;
+                    try {
+                        module = midiDeviceModule.load();
+                        module.setPrefWidth(midiDeviceSelectionController.getListView().getPrefWidth() - 18);
+//                    module.setMaxWidth(midiDeviceSelectionController.getListView().getPrefWidth() - 60);
+                    } catch (IOException e) {
+                        logger.error("Unable to load Midi Module FXML");
+                    }
+                    MidiDeviceModuleController moduleController = midiDeviceModule.getController();
+                    if (module != null) {
+                        module.getProperties().put("controller", moduleController);
+                    }
+                    try {
+                        moduleController.setDevice(mdi);
+                    } catch (MidiUnavailableException e) {
+                        logger.error("MidiDevice is Unavailable");
+                    }
+                    midiDeviceSelectionController.getListView().getItems().add(module);
+                }
+
+                logger.info("Added all MidiDevice");
+
+                if (midiDevice != null) {
+                    ObservableList<BorderPane> moduleList = midiDeviceSelectionController.getListView().getItems();
+                    for (BorderPane module : moduleList) {
+                        MidiDeviceModuleController mdc = (MidiDeviceModuleController) module.getProperties().get("controller");
+                        MidiDevice checkDevice = mdc.getMidiDevice();
+                        if (!checkDevice.equals(midiDevice)) {
+                            mdc.reset();
+                        } else {
+                            mdc.active();
+//                        this.midiDevice = midiDevice;
+                            midiDeviceSelectionController.setMidiDevice(midiDevice);
+                            logger.info("Midi Module Activated");
+                        }
+                    }
+                    logger.info("Set MidiDevice Selection");
+                }
             }
 
             Stage stage = new Stage();
@@ -279,13 +339,16 @@ public class MainFrameController {
             });
 
             stage.setTitle("Connect to MidiDevice...");
-            stage.setResizable(false);
-//            stage.setMaxHeight(400);
             stage.setScene(scene);
-            stage.show();
-            stage.setOnCloseRequest(e -> {
-                quit(stage);
+//            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setResizable(false);
+            String filepath = "/com/alphagen/studio/pianocontroller/images/app_logo_2.png";
+            InputStream inputStream = MainFrameController.class.getResourceAsStream(filepath);
+            stage.getIcons().add(new Image(inputStream));
+            stage.setOnCloseRequest(event -> {
+                WindowUtil.close(stage);
             });
+            stage.show();
         }
     }
 
@@ -339,15 +402,13 @@ public class MainFrameController {
 
         if (midiDevice == null) {
             logger.error("There is no Midi Device connected");
-//            midiDeviceNameLabel.setTextFill(Color.BLACK); // default text color
             midiDeviceNameLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("#9c0000"), new CornerRadii(0), Insets.EMPTY)));
             return;
         } else {
-//            midiDeviceNameLabel.setTextFill(Color.WHITE);
             midiDeviceNameLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("#f4f4f400"), new CornerRadii(0), Insets.EMPTY)));
         }
 
-        if (!MidiDeviceChecker.checkDevice(midiDevice)) {
+        if (!MidiDeviceUtil.checkDevice(midiDevice)) {
             logger.error("Unable to connect to device");
             return;
         }
@@ -355,12 +416,13 @@ public class MainFrameController {
         isRunning();
 
         MidiDeviceReceiver mdr = new MidiDeviceReceiver(midiDevice.getDeviceInfo().getName());
+        ControllerManager.setMidiDeviceReceiver(mdr);
 
         try {
             Transmitter transmitter = midiDevice.getTransmitter();
             transmitter.setReceiver(mdr);
         } catch (MidiUnavailableException e) {
-            logger.error("Unable to get Transmitter for MidiDevice: " + midiDevice.getDeviceInfo().getName());
+            logger.error("Unable to get Transmitter for MidiDevice: {}", midiDevice.getDeviceInfo().getName());
         }
 
         receiverThread = new Thread(mdr);
@@ -371,6 +433,23 @@ public class MainFrameController {
         } catch (MidiUnavailableException e) {
             logger.error("Unable to Open Midi Device");
         }
+
+        /*
+         * Writing code to run KeyVisualizer in separate thread
+         */
+//        FXMLLoader kvl = new FXMLLoader(Main.class.getResource("fxml/KeyVisualizer_V1.fxml"));
+//        try {
+//            Stage stage = new Stage();
+//            BorderPane kv = kvl.load();
+//            KeyVisualizerController kvc = kvl.getController();
+//            WindowUtil.setCustomWindow(stage, false, kvc.getRoot());
+//            ControllerManager.setKeyVisualizerController(kvc);
+//            stage.setScene(new Scene(kv));
+//            stage.show();
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+
     }
 
     /**
@@ -445,6 +524,7 @@ public class MainFrameController {
             configFileNameLabel.setText("Invalid Midi Device");
             midiDeviceNameLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("#9c0000"), new CornerRadii(0), Insets.EMPTY)));
         } else {
+            midiDeviceNameLabel.setText(this.midiDevice.getDeviceInfo().getName());
             midiDeviceNameLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("#f4f4f400"), new CornerRadii(0), Insets.EMPTY)));
         }
     }
@@ -466,7 +546,6 @@ public class MainFrameController {
     public void setMidiDevice(MidiDevice midiDevice) {
         logger.info("Set Midi Device: {}", midiDevice.getDeviceInfo().getName());
         this.midiDevice = midiDevice;
-        midiDeviceNameLabel.setText(this.midiDevice.getDeviceInfo().getName());
         validMidiDevice();
     }
 
@@ -475,6 +554,7 @@ public class MainFrameController {
      * quit or close the app.
      */
     public void stopApplication() {
+        ControllerManager.getMidiDeviceReceiver().getKeyViewer().dispose();
         midiDevice.close();
         isRunning = false;
         isRunning();
@@ -485,6 +565,8 @@ public class MainFrameController {
         try {
             saveReader = new SaveReader((JFSFile) configFile);
             saveReader.readAll();
+            setValidConfigLabel(configFile);
+            validConfigFile();
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (JSFFileNullException e) {
@@ -497,6 +579,7 @@ public class MainFrameController {
         try {
             midiDevice = MidiSystem.getMidiDevice(MidiSystem.getMidiDeviceInfo()[5]);
             logger.debug(midiDevice.getDeviceInfo().getName());
+            validMidiDevice();
         } catch (MidiUnavailableException e) {
             throw new RuntimeException(e);
         }
@@ -518,17 +601,20 @@ public class MainFrameController {
         }
     }
 
+    public SaveReader getSaveReader() {
+        return saveReader;
+    }
+
     public void minimizeApp() {
         Stage stage = (Stage) root.getScene().getWindow();
         stage.setIconified(true);
     }
 
     public void quitApp() {
-        Main.quit();
+        WindowUtil.quit();
     }
 
-    private static class Delta {
-        double x, y;
+    public Pane getRoot() {
+        return root;
     }
-
 }
